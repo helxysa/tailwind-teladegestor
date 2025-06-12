@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Gestor - Consultas Públicas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gov-blue': '#1d4e89',
+                        'gov-blue-light': '#3485d0',
+                        'gov-blue-dark': '#003366',
+                        'gov-green': '#4caf50',
+                        'gov-red': '#f44336',
+                        'gov-orange': '#ff9800',
+                        'gov-gray-light': '#f8f9fa',
+                        'gov-gray': '#e9ecef',
+                        'gov-gray-dark': '#6c757d'
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/css">
+        .status-badge {
+            @apply px-3 py-1 rounded-full text-xs font-bold;
+        }
+
+        .consultation-card {
+            @apply p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200;
+        }
+
+        .comment-card {
+            @apply border-l-4 border-gray-300 pl-4 py-4;
+        }
+
+        .pending-comment {
+            border-left-color: #ff9800;
+        }
+
+        .approved-comment {
+            border-left-color: #4caf50;
+        }
+
+        .rejected-comment {
+            border-left-color: #f44336;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <!-- Barra de navegação -->
+    <nav class="bg-gov-blue text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-landmark text-white text-xl mr-2"></i>
+                        <span class="text-xl font-semibold">Portal do Gestor</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-user-circle mr-2"></i>
+                        <span class="font-medium">Gestor Administrativo</span>
+                    </div>
+                    <button class="text-white hover:text-gray-200">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo principal -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Título da seção -->
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Consultas Públicas</h1>
+                <p class="text-gray-600">Gerencie e modere as consultas públicas</p>
+            </div>
+            <div class="flex space-x-2">
+                <button class="bg-gov-blue hover:bg-gov-blue-dark text-white px-4 py-2 rounded-md">
+                    <i class="fas fa-plus mr-2"></i> Nova Consulta
+                </button>
+            </div>
+        </div>
+
+        <!-- Painel de Consultas (Tela 1) -->
+        <div id="consultationList">
+            <!-- Barra de filtros -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-gray-100">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">Filtro por Status</label>
+                        <div class="relative">
+                            <select
+                                class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 pr-10 focus:ring-2 focus:ring-gov-blue-light focus:border-gov-blue-light transition-all duration-200 appearance-none cursor-pointer hover:border-gray-300 font-medium text-gray-700">
+                                <option>Todas</option>
+                                <option>Ativas</option>
+                                <option>Pendentes</option>
+                                <option>Encerradas</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-3">Buscar por Título</label>
+                        <div class="relative">
+                            <input type="text"
+                                class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 pl-10 focus:ring-2 focus:ring-gov-blue-light focus:border-gov-blue-light transition-all duration-200 hover:border-gray-300 font-medium text-gray-700 placeholder-gray-400"
+                                placeholder="Digite o título...">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-end">
+                        <button
+                            class="bg-gradient-to-r from-gov-blue to-gov-blue-dark hover:from-gov-blue-dark hover:to-gov-blue text-white px-6 py-3 rounded-xl w-full font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
+                            <i class="fas fa-filter mr-2"></i> Aplicar Filtros
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contadores rápidos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div
+                    class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-gov-orange transform hover:scale-105 transition-transform duration-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium mb-1">Total de Consultas</p>
+                            <p class="text-3xl font-bold text-gray-900">24</p>
+                        </div>
+                        <div
+                            class="bg-gradient-to-br from-gov-blue-light to-gov-blue-dark text-white rounded-xl p-3 shadow-lg">
+                            <i class="fas fa-clipboard-list text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-gov-green transform hover:scale-105 transition-transform duration-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium mb-1">Consultas Ativas</p>
+                            <p class="text-3xl font-bold text-gray-900">8</p>
+                        </div>
+                        <div
+                            class="bg-gradient-to-br from-gov-green to-emerald-600 text-white rounded-xl p-3 shadow-lg">
+                            <i class="fas fa-play-circle text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-gov-orange transform hover:scale-105 transition-transform duration-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium mb-1">Pendente de Moderação</p>
+                            <p class="text-3xl font-bold text-gray-900">42</p>
+                        </div>
+                        <div
+                            class="bg-gradient-to-br from-gov-orange to-orange-600 text-white rounded-xl p-3 shadow-lg">
+                            <i class="fas fa-comments text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-gov-red transform hover:scale-105 transition-transform duration-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-gray-500 text-sm font-medium mb-1">Consultas Encerradas</p>
+                            <p class="text-3xl font-bold text-gray-900">12</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-gov-red to-red-600 text-white rounded-xl p-3 shadow-lg">
+                            <i class="fas fa-ban text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de consultas -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="divide-y divide-gray-100">
+                    <!-- Item de consulta 1 -->
+                    <div class="p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 cursor-pointer transition-all duration-300 group"
+                        data-index="0">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                            <div>
+                                <h3
+                                    class="font-bold text-gray-900 text-lg group-hover:text-gov-blue transition-colors duration-200">
+                                    Modernização do transporte público urbano</h3>
+                                <p class="text-sm text-gray-500 mt-1 font-medium">ID: CP-2023-014</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-sm font-medium">Encerramento:</p>
+                                <p class="font-semibold text-gray-900 mt-1">15/08/2023</p>
+                            </div>
+                            <div>
+                                <span
+                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-orange-100 text-orange-700 border border-orange-200">
+                                    <i class="fas fa-comments mr-2"></i> 15 pendentes
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span
+                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-green-100 text-green-700 border border-green-200">
+                                    <i class="fas fa-play-circle mr-2"></i> Ativa
+                                </span>
+                                <button
+                                    class="bg-gradient-to-r from-gov-blue-light to-gov-blue-dark hover:from-gov-blue-dark hover:to-gov-blue text-white rounded-xl p-3 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-110">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item de consulta 2 -->
+                    <div class="p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 cursor-pointer transition-all duration-300 group"
+                        data-index="1">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                            <div>
+                                <h3
+                                    class="font-bold text-gray-900 text-lg group-hover:text-gov-blue transition-colors duration-200">
+                                    Revisão da legislação ambiental municipal</h3>
+                                <p class="text-sm text-gray-500 mt-1 font-medium">ID: CP-2023-015</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-sm font-medium">Encerramento:</p>
+                                <p class="font-semibold text-gray-900 mt-1">30/07/2023</p>
+                            </div>
+                            <div>
+                                <span
+                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-orange-100 text-orange-700 border border-orange-200">
+                                    <i class="fas fa-comments mr-2"></i> 8 pendentes
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span
+                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-green-100 text-green-700 border border-green-200">
+                                    <i class="fas fa-play-circle mr-2"></i> Ativa
+                                </span>
+                                <button
+                                    class="bg-gradient-to-r from-gov-blue-light to-gov-blue-dark hover:from-gov-blue-dark hover:to-gov-blue text-white rounded-xl p-3 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-110">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item de consulta 3 -->
+                    <div class="p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 cursor-pointer transition-all duration-300 group"
+                        data-index="2">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                            <div>
+                                <h3
+                                    class="font-bold text-gray-900 text-lg group-hover:text-gov-blue transition-colors duration-200">
+                                    Plano de educação digital nas escolas públicas</h3>
+                                <p class="text-sm text-gray-500 mt-1 font-medium">ID: CP-2023-013</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-sm font-medium">Encerramento:</p>
+                                <p class="font-semibold text-gray-900 mt-1">10/07/2023</p>
+                            </div>
+                            <div>
+                                <span
+                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 border border-gray-200">
+                                    <i class="fas fa-check mr-2"></i> Sem pendentes
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span
+                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-red-100 text-red-700 border border-red-200">
+                                    <i class="fas fa-ban mr-2"></i> Encerrada
+                                </span>
+                                <button
+                                    class="bg-gradient-to-r from-gov-blue-light to-gov-blue-dark hover:from-gov-blue-dark hover:to-gov-blue text-white rounded-xl p-3 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-110">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item de consulta 4 -->
+                    <div class="p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 cursor-pointer transition-all duration-300 group"
+                        data-index="3">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                            <div>
+                                <h3
+                                    class="font-bold text-gray-900 text-lg group-hover:text-gov-blue transition-colors duration-200">
+                                    Expansão da coleta seletiva de lixo</h3>
+                                <p class="text-sm text-gray-500 mt-1 font-medium">ID: CP-2023-016</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-sm font-medium">Encerramento:</p>
+                                <p class="font-semibold text-gray-900 mt-1">25/08/2023</p>
+                            </div>
+                            <div>
+                                <span
+                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-orange-100 text-orange-700 border border-orange-200">
+                                    <i class="fas fa-comments mr-2"></i> 3 pendentes
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span
+                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-green-100 text-green-700 border border-green-200">
+                                    <i class="fas fa-play-circle mr-2"></i> Ativa
+                                </span>
+                                <button
+                                    class="bg-gradient-to-r from-gov-blue-light to-gov-blue-dark hover:from-gov-blue-dark hover:to-gov-blue text-white rounded-xl p-3 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-110">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paginação -->
+                <div class="flex justify-between items-center p-6 border-t border-gray-100 bg-gray-50">
+                    <p class="text-sm text-gray-600 font-medium">Mostrando 4 de 24 consultas</p>
+                    <div class="flex space-x-2">
+                        <button
+                            class="bg-white border border-gray-200 rounded-xl p-3 hover:bg-gray-50 transition-colors duration-200 shadow-sm">
+                            <i class="fas fa-chevron-left text-gray-600"></i>
+                        </button>
+                        <button
+                            class="bg-gradient-to-r from-gov-blue to-gov-blue-dark text-white rounded-xl w-10 h-10 shadow-lg font-medium">1</button>
+                        <button
+                            class="bg-white border border-gray-200 rounded-xl w-10 h-10 hover:bg-gray-50 transition-colors duration-200 shadow-sm font-medium text-gray-700">2</button>
+                        <button
+                            class="bg-white border border-gray-200 rounded-xl w-10 h-10 hover:bg-gray-50 transition-colors duration-200 shadow-sm font-medium text-gray-700">3</button>
+                        <button
+                            class="bg-white border border-gray-200 rounded-xl p-3 hover:bg-gray-50 transition-colors duration-200 shadow-sm">
+                            <i class="fas fa-ellipsis-h text-gray-600"></i>
+                        </button>
+                        <button
+                            class="bg-white border border-gray-200 rounded-xl w-10 h-10 hover:bg-gray-50 transition-colors duration-200 shadow-sm font-medium text-gray-700">6</button>
+                        <button
+                            class="bg-white border border-gray-200 rounded-xl p-3 hover:bg-gray-50 transition-colors duration-200 shadow-sm">
+                            <i class="fas fa-chevron-right text-gray-600"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tela 2: Detalhes da Consulta (oculta inicialmente) -->
+            <div id="consultationDetail" class="hidden">
+                <!-- Cabeçalho detalhe -->
+                <div class="mb-6">
+                    <button id="backToList" class="text-gov-blue hover:text-gov-blue-dark mb-4 flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Voltar para a lista
+                    </button>
+                    <div class="flex flex-wrap justify-between items-start">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-900">Modernização do transporte público urbano</h1>
+                            <div class="flex flex-wrap items-center gap-2 mt-2">
+                                <span class="status-badge bg-gov-green/20 text-gov-green">
+                                    <i class="fas fa-play-circle mr-1"></i> Ativa
+                                </span>
+                                <span class="text-gray-600">ID: CP-2023-014</span>
+                                <span class="text-gray-600">Período: 01/06/2023 até 15/08/2023</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 mt-2 sm:mt-0">
+                            <button class="bg-gov-blue hover:bg-gov-blue-dark text-white px-4 py-2 rounded-md">
+                                <i class="fas fa-edit mr-2"></i> Editar
+                            </button>
+                            <button
+                                class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-md">
+                                <i class="fas fa-file-export mr-2"></i> Exportar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Informações da Consulta -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                            <h2 class="text-lg font-bold text-gray-900 mb-4">Detalhes da Consulta</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <h3 class="text-sm font-medium text-gray-700">Descrição</h3>
+                                    <p class="mt-1 text-gray-900">O objetivo desta consulta é recolher contribuições dos
+                                        cidadãos para o plano de modernização do sistema de transporte público urbano,
+                                        com
+                                        foco em acessibilidade, sustentabilidade e integração modal.</p>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-medium text-gray-700">Perguntas da Consulta</h3>
+                                    <ol class="mt-1 space-y-2 ml-4 list-decimal">
+                                        <li class="text-gray-900">Quais são os maiores problemas que você enfrenta
+                                            atualmente com o transporte público?</li>
+                                        <li class="text-gray-900">Que melhorias priorizar na modernização do sistema?
+                                        </li>
+                                        <li class="text-gray-900">Como tornar o transporte público mais atrativo?</li>
+                                        <li class="text-gray-900">Sugira medidas para melhorar a integração entre
+                                            diferentes
+                                            modais.</li>
+                                    </ol>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <h3 class="text-sm font-medium text-gray-700">Data de Início</h3>
+                                        <p class="mt-1 text-gray-900">01/06/2023</p>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-medium text-gray-700">Data de Encerramento</h3>
+                                        <p class="mt-1 text-gray-900">15/08/2023</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Estatísticas de participação -->
+                        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                            <h2 class="text-lg font-bold text-gray-900 mb-4">Estatísticas de Participação</h2>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div class="text-center p-4 border rounded-lg">
+                                    <p class="text-3xl font-bold text-gov-blue">127</p>
+                                    <p class="text-gray-600">Participantes</p>
+                                </div>
+                                <div class="text-center p-4 border rounded-lg">
+                                    <p class="text-3xl font-bold text-gov-orange">42</p>
+                                    <p class="text-gray-600">Contribuições</p>
+                                </div>
+                                <div class="text-center p-4 border rounded-lg">
+                                    <p class="text-3xl font-bold text-gov-green">58%</p>
+                                    <p class="text-gray-600">Temas relevantes</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Área de Moderação -->
+                    <div>
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden sticky top-6">
+                            <!-- Abas de status -->
+                            <div class="border-b">
+                                <div class="flex">
+                                    <button class="px-4 py-3 font-medium text-sm relative flex-1 text-center">
+                                        <span class="mr-1">Pendentes</span>
+                                        <span class="status-badge bg-gov-orange text-white">15</span>
+                                    </button>
+                                    <button class="px-4 py-3 font-medium text-sm text-gray-500 flex-1 text-center">
+                                        <span class="mr-1">Aprovados</span>
+                                        <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs">27</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Lista de comentários pendentes -->
+                            <div class="p-4 max-h-[70vh] overflow-y-auto">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h2 class="text-lg font-bold text-gray-900">Comentários Pendentes</h2>
+                                    <span class="text-sm text-gov-blue">15 novos</span>
+                                </div>
+
+                                <!-- Comentário 1 -->
+                                <div class="comment-card pending-comment mb-4">
+                                    <div class="flex justify-between">
+                                        <div>
+                                            <span class="font-medium text-gray-900">Carlos Oliveira</span>
+                                            <span class="text-sm text-gray-500 ml-2">(Não anônimo)</span>
+                                        </div>
+                                        <span class="text-sm text-gray-500">10/07/2023 14:23</span>
+                                    </div>
+                                    <p class="mt-2 text-gray-800">"Os ônibus estão sempre lotados nos horários de pico.
+                                        Sugiro aumentar a frota e criar linhas expressas para agilizar o deslocamento
+                                        nos
+                                        principais corredores da cidade."</p>
+                                    <div class="flex mt-4 space-x-2">
+                                        <button
+                                            class="approve-btn flex-1 bg-gov-green hover:bg-gov-green/90 text-white py-2 px-4 rounded-md flex items-center justify-center">
+                                            <i class="fas fa-check mr-2"></i> Aprovar
+                                        </button>
+                                        <button
+                                            class="reject-btn flex-1 bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center">
+                                            <i class="fas fa-times mr-2"></i> Recusar
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Comentário 2 -->
+                                <div class="comment-card pending-comment mb-4">
+                                    <div class="flex justify-between">
+                                        <div>
+                                            <span class="font-medium text-gray-900">Anônimo</span>
+                                        </div>
+                                        <span class="text-sm text-gray-500">11/07/2023 09:41</span>
+                                    </div>
+                                    <p class="mt-2 text-gray-800">"Falta acessibilidade para pessoas com mobilidade
+                                        reduzida. Muitos ônibus não têm elevadores ou rampas que funcionem
+                                        adequadamente."
+                                    </p>
+                                    <div class="flex mt-4 space-x-2">
+                                        <button
+                                            class="approve-btn flex-1 bg-gov-green hover:bg-gov-green/90 text-white py-2 px-4 rounded-md flex items-center justify-center">
+                                            <i class="fas fa-check mr-2"></i> Aprovar
+                                        </button>
+                                        <button
+                                            class="reject-btn flex-1 bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center">
+                                            <i class="fas fa-times mr-2"></i> Recusar
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Comentário 3 -->
+                                <div class="comment-card pending-comment mb-4">
+                                    <div class="flex justify-between">
+                                        <div>
+                                            <span class="font-medium text-gray-900">Mariana Santos</span>
+                                            <span class="text-sm text-gray-500 ml-2">(Não anônimo)</span>
+                                        </div>
+                                        <span class="text-sm text-gray-500">11/07/2023 16:15</span>
+                                    </div>
+                                    <p class="mt-2 text-gray-800">"Sugiro a implementação de bilhetes digitais
+                                        integrados
+                                        que possam ser usados em diferentes modais de transporte, como ônibus, metrô e
+                                        trem."</p>
+                                    <div class="flex mt-4 space-x-2">
+                                        <button
+                                            class="approve-btn flex-1 bg-gov-green hover:bg-gov-green/90 text-white py-2 px-4 rounded-md flex items-center justify-center">
+                                            <i class="fas fa-check mr-2"></i> Aprovar
+                                        </button>
+                                        <button
+                                            class="reject-btn flex-1 bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center">
+                                            <i class="fas fa-times mr-2"></i> Recusar
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    <button class="text-gov-blue hover:text-gov-blue-dark font-medium">
+                                        <i class="fas fa-arrow-down mr-1"></i> Carregar mais
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de confirmação de recusa -->
+        <div id="rejectModal"
+            class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold text-gray-900">Confirmar Recusa</h3>
+                        <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-700 mb-6">Tem certeza que deseja recusar este comentário? Um e-mail será enviado
+                        ao
+                        participante explicando o motivo da recusa.</p>
+
+                    <div class="bg-gray-100 p-4 rounded-md mb-6">
+                        <h4 class="text-sm font-medium text-gray-700 mb-2">Conteúdo do e-mail:</h4>
+                        <p class="text-sm text-gray-900 mb-1"><strong>Assunto:</strong> Seu comentário na Consulta
+                            Pública
+                            'Modernização do transporte público urbano' foi moderado.</p>
+                        <p class="text-sm text-gray-900"><strong>Mensagem:</strong> "Olá, <span
+                                id="userNamePlaceholder">[Nome do Cidadão]</span>. Agradecemos sua participação na
+                            consulta
+                            pública 'Modernização do transporte público urbano'. Seu comentário não pôde ser publicado
+                            pois
+                            não está em conformidade com nossas diretrizes de participação (ex: uso de linguagem
+                            inadequada,
+                            conteúdo fora de tópico ou spam). Agradecemos a sua compreensão."</p>
+                    </div>
+
+                    <div class="flex justify-end space-x-3">
+                        <button id="cancelReject" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                            Cancelar
+                        </button>
+                        <button id="confirmReject"
+                            class="px-4 py-2 bg-gov-red hover:bg-gov-red/90 text-white rounded-md">
+                            <i class="fas fa-envelope mr-2"></i> Confirmar Recusa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rodapé -->
+        <footer class="bg-white border-t mt-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="flex items-center">
+                        <i class="fas fa-landmark text-gov-blue text-xl mr-2"></i>
+                        <span class="text-lg font-semibold">Governo do Estado</span>
+                    </div>
+                    <div class="mt-4 md:mt-0 text-gray-600 text-sm">
+                        Portal do Gestor - Sistema de Consultas Públicas v1.0
+                    </div>
+                </div>
+                <div class="mt-6 text-center md:text-left text-gray-500 text-xs">
+                    <p>&copy; 2023 Secretaria de Governo Digital. Todos os direitos reservados.</p>
+                    <p class="mt-1">Sistema seguro, acessível e de uso exclusivo para gestores públicos autorizados.</p>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            // Dados mockados das consultas
+            const consultations = [
+                {
+                    id: "CP-2023-014",
+                    title: "Modernização do transporte público urbano",
+                    status: "Ativa",
+                    endDate: "15/08/2023",
+                    startDate: "01/06/2023",
+                    pendingComments: 15,
+                    description: "O objetivo desta consulta é recolher contribuições dos cidadãos para o plano de modernização do sistema de transporte público urbano, com foco em acessibilidade, sustentabilidade e integração modal.",
+                    questions: [
+                        "Quais são os maiores problemas que você enfrenta atualmente com o transporte público?",
+                        "Que melhorias priorizar na modernização do sistema?",
+                        "Como tornar o transporte público mais atrativo?",
+                        "Sugira medidas para melhorar a integração entre diferentes modais."
+                    ],
+                    stats: {
+                        participants: 127,
+                        contributions: 42,
+                        relevantTopics: "58%"
+                    }
+                },
+                {
+                    id: "CP-2023-015",
+                    title: "Revisão da legislação ambiental municipal",
+                    status: "Ativa",
+                    endDate: "30/07/2023",
+                    startDate: "01/05/2023",
+                    pendingComments: 8,
+                    description: "Esta consulta visa coletar sugestões para a atualização da legislação ambiental municipal, focando em sustentabilidade e preservação.",
+                    questions: [
+                        "Como tornar a legislação ambiental mais efetiva?",
+                        "Quais áreas precisam de maior proteção?",
+                        "Que incentivos podem ser criados para práticas sustentáveis?"
+                    ],
+                    stats: {
+                        participants: 89,
+                        contributions: 35,
+                        relevantTopics: "62%"
+                    }
+                },
+                {
+                    id: "CP-2023-013",
+                    title: "Plano de educação digital nas escolas públicas",
+                    status: "Encerrada",
+                    endDate: "10/07/2023",
+                    startDate: "10/04/2023",
+                    pendingComments: 0,
+                    description: "Consulta para definir diretrizes do programa de educação digital nas escolas da rede pública.",
+                    questions: [
+                        "Quais tecnologias devem ser priorizadas?",
+                        "Como capacitar os professores?",
+                        "Que tipo de infraestrutura é necessária?"
+                    ],
+                    stats: {
+                        participants: 156,
+                        contributions: 78,
+                        relevantTopics: "75%"
+                    }
+                }
+            ];
+
+            function createConsultationDetailView(consultation) {
+                // Criar um container para os detalhes
+                const detailContainer = document.getElementById('consultationDetail');
+                detailContainer.innerHTML = `
+                    <div class="mb-6">
+                        <button id="backToList" class="text-gov-blue hover:text-gov-blue-dark mb-4 flex items-center">
+                            <i class="fas fa-arrow-left mr-2"></i> Voltar para a lista
+                        </button>
+                        <div class="flex flex-wrap justify-between items-start">
+                            <div>
+                                <h1 class="text-2xl font-bold text-gray-900">${consultation.title}</h1>
+                                <div class="flex flex-wrap items-center gap-2 mt-2">
+                                    <span class="status-badge bg-gov-green/20 text-gov-green">
+                                        <i class="fas fa-play-circle mr-1"></i> ${consultation.status}
+                                    </span>
+                                    <span class="text-gray-600">ID: ${consultation.id}</span>
+                                    <span class="text-gray-600">Período: ${consultation.startDate} até ${consultation.endDate}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2">
+                            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                                <h2 class="text-lg font-bold text-gray-900 mb-4">Detalhes da Consulta</h2>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h3 class="text-sm font-medium text-gray-700">Descrição</h3>
+                                        <p class="mt-1 text-gray-900">${consultation.description}</p>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-medium text-gray-700">Perguntas da Consulta</h3>
+                                        <ol class="mt-1 space-y-2 ml-4 list-decimal">
+                                            ${consultation.questions.map(q => `<li class="text-gray-900">${q}</li>`).join('')}
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                                <h2 class="text-lg font-bold text-gray-900 mb-4">Estatísticas de Participação</h2>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                    <div class="text-center p-4 border rounded-lg">
+                                        <p class="text-3xl font-bold text-gov-blue">${consultation.stats.participants}</p>
+                                        <p class="text-gray-600">Participantes</p>
+                                    </div>
+                                    <div class="text-center p-4 border rounded-lg">
+                                        <p class="text-3xl font-bold text-gov-orange">${consultation.stats.contributions}</p>
+                                        <p class="text-gray-600">Contribuições</p>
+                                    </div>
+                                    <div class="text-center p-4 border rounded-lg">
+                                        <p class="text-3xl font-bold text-gov-green">${consultation.stats.relevantTopics}</p>
+                                        <p class="text-gray-600">Temas relevantes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden sticky top-6">
+                                <div class="border-b">
+                                    <div class="flex">
+                                        <button id="pendingTab" class="px-4 py-3 font-medium text-sm relative flex-1 text-center bg-blue-50">
+                                            <span class="mr-1">Pendentes</span>
+                                            <span class="status-badge bg-gov-orange text-white">15</span>
+                                        </button>
+                                        <button id="approvedTab" class="px-4 py-3 font-medium text-sm text-gray-500 flex-1 text-center">
+                                            <span class="mr-1">Aprovados</span>
+                                            <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs">27</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id="commentsContainer" class="p-4 max-h-[70vh] overflow-y-auto">
+                                    ${renderPendingComments()}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Adicionar eventos para abas de comentários
+                setupCommentTabs();
+
+                // Adicionar evento de voltar
+                document.getElementById('backToList').addEventListener('click', function () {
+                    document.getElementById('consultationDetail').classList.add('hidden');
+                    document.getElementById('consultationList').classList.remove('hidden');
+                });
+            }
+
+            function renderPendingComments() {
+                return `
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-bold text-gray-900">Comentários Pendentes</h2>
+                        <span class="text-sm text-gov-blue">15 novos</span>
+                    </div>
+
+                    <div class="comment-card pending-comment mb-4">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="font-medium text-gray-900">Carlos Oliveira</span>
+                                <span class="text-sm text-gray-500 ml-2">(Não anônimo)</span>
+                            </div>
+                            <span class="text-sm text-gray-500">10/07/2023 14:23</span>
+                        </div>
+                        <p class="mt-2 text-gray-800">"Os ônibus estão sempre lotados nos horários de pico. Sugiro aumentar a frota e criar linhas expressas para agilizar o deslocamento nos principais corredores da cidade."</p>
+                        <div class="flex mt-4 space-x-2">
+                            <button class="approve-btn flex-1 bg-gov-green hover:bg-gov-green/90 text-white py-2 px-4 rounded-md flex items-center justify-center">
+                                <i class="fas fa-check mr-2"></i> Aprovar
+                            </button>
+                            <button class="reject-btn flex-1 bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center">
+                                <i class="fas fa-times mr-2"></i> Recusar
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function renderApprovedComments() {
+                return `
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-bold text-gray-900">Comentários Aprovados</h2>
+                        <span class="text-sm text-gov-green">27 aprovados</span>
+                    </div>
+
+                    <div class="comment-card approved-comment mb-4">
+                        <div class="flex justify-between">
+                            <div>
+                                <span class="font-medium text-gray-900">Maria Silva</span>
+                                <span class="text-sm text-gray-500 ml-2">(Não anônimo)</span>
+                            </div>
+                            <span class="text-sm text-gray-500">05/07/2023 09:15</span>
+                        </div>
+                        <p class="mt-2 text-gray-800">"A integração entre diferentes modais de transporte é fundamental para melhorar a mobilidade urbana."</p>
+                    </div>
+                `;
+            }
+
+            function setupCommentTabs() {
+                const pendingTab = document.getElementById('pendingTab');
+                const approvedTab = document.getElementById('approvedTab');
+                const commentsContainer = document.getElementById('commentsContainer');
+
+                pendingTab.addEventListener('click', () => {
+                    pendingTab.classList.add('bg-blue-50');
+                    approvedTab.classList.remove('bg-blue-50');
+                    commentsContainer.innerHTML = renderPendingComments();
+                    setupCommentActions();
+                });
+
+                approvedTab.addEventListener('click', () => {
+                    approvedTab.classList.add('bg-blue-50');
+                    pendingTab.classList.remove('bg-blue-50');
+                    commentsContainer.innerHTML = renderApprovedComments();
+                });
+            }
+
+            function setupCommentActions() {
+                // Ações de aprovar/reprovar comentários
+                document.querySelectorAll('.approve-btn').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const commentCard = this.closest('.comment-card');
+                        alert('Comentário aprovado com sucesso!');
+                        commentCard.remove();
+                    });
+                });
+
+                document.querySelectorAll('.reject-btn').forEach(btn => {
+                    btn.addEventListener('click', function () {
+                        const commentCard = this.closest('.comment-card');
+                        alert('Comentário recusado!');
+                        commentCard.remove();
+                    });
+                });
+            }
+
+            // Modificar o evento de clique nos cards
+            document.querySelectorAll('.divide-y > div').forEach(card => {
+                card.addEventListener('click', function () {
+                    const index = parseInt(this.getAttribute('data-index'), 10);
+                    const consultation = consultations[index];
+
+                    if (consultation) {
+                        // Criar a visualização de detalhes
+                        createConsultationDetailView(consultation);
+
+                        // Esconder lista, mostrar detalhes
+                        document.getElementById('consultationList').classList.add('hidden');
+                        document.getElementById('consultationDetail').classList.remove('hidden');
+                    }
+                });
+            });
+        </script>
+    </div>
+</body>
+
+</html>
