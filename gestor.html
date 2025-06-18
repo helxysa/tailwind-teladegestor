@@ -36,7 +36,7 @@
         }
 
         .comment-card {
-            @apply border-l-4 border-gray-300 pl-4 py-4;
+            @apply border-l-4 pl-4 py-4 bg-white rounded-r-lg shadow-sm transition-all duration-500;
         }
 
         .pending-comment {
@@ -45,16 +45,23 @@
 
         .approved-comment {
             border-left-color: #4caf50;
+            background-color: #f0fff4;
         }
 
         .rejected-comment {
             border-left-color: #f44336;
+            background-color: #fff1f2;
+        }
+        
+        .fade-out {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
     </style>
 </head>
 
-<body class="bg-gray-100 font-sans">
-    <!-- Barra de navegação -->
+<body class="bg-gov-gray-light font-sans">
     <nav class="bg-gov-blue text-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
@@ -77,24 +84,21 @@
         </div>
     </nav>
 
-    <!-- Conteúdo principal -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Título da seção -->
-        <div class="flex justify-between items-center mb-8">
-            <div>
-                <h1 class="text-2xl font-bold text-gray-900">Consultas Públicas</h1>
-                <p class="text-gray-600">Gerencie e modere as consultas públicas</p>
-            </div>
-            <div class="flex space-x-2">
-                <button class="bg-gov-blue hover:bg-gov-blue-dark text-white px-4 py-2 rounded-md">
-                    <i class="fas fa-plus mr-2"></i> Nova Consulta
-                </button>
-            </div>
-        </div>
-
-        <!-- Painel de Consultas (Tela 1) -->
+        
         <div id="consultationList">
-            <!-- Barra de filtros -->
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Consultas Públicas</h1>
+                    <p class="text-gray-600">Gerencie e modere as consultas públicas</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button id="newConsultationBtn" class="bg-gov-blue hover:bg-gov-blue-dark text-white px-4 py-2 rounded-md">
+                        <i class="fas fa-plus mr-2"></i> Nova Consulta
+                    </button>
+                </div>
+            </div>
+
             <div class="bg-white rounded-2xl shadow-lg p-6 mb-8 border border-gray-100">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
@@ -132,10 +136,9 @@
                 </div>
             </div>
 
-            <!-- Contadores rápidos -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div
-                    class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-gov-orange transform hover:scale-105 transition-transform duration-200">
+                 <div
+                    class="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-gov-blue transform hover:scale-105 transition-transform duration-200">
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="text-gray-500 text-sm font-medium mb-1">Total de Consultas</p>
@@ -190,687 +193,585 @@
                 </div>
             </div>
 
-            <!-- Lista de consultas -->
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div class="divide-y divide-gray-100">
-                    <!-- Item de consulta 1 -->
-                    <div class="p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 cursor-pointer transition-all duration-300 group"
-                        data-index="0">
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
-                            <div>
-                                <h3
-                                    class="font-bold text-gray-900 text-lg group-hover:text-gov-blue transition-colors duration-200">
-                                    Modernização do transporte público urbano</h3>
-                                <p class="text-sm text-gray-500 mt-1 font-medium">ID: CP-2023-014</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500 text-sm font-medium">Encerramento:</p>
-                                <p class="font-semibold text-gray-900 mt-1">15/08/2023</p>
-                            </div>
-                            <div>
-                                <span
-                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-orange-100 text-orange-700 border border-orange-200">
-                                    <i class="fas fa-comments mr-2"></i> 15 pendentes
-                                </span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span
-                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-green-100 text-green-700 border border-green-200">
-                                    <i class="fas fa-play-circle mr-2"></i> Ativa
-                                </span>
-                                <button
-                                    class="bg-gradient-to-r from-gov-blue-light to-gov-blue-dark hover:from-gov-blue-dark hover:to-gov-blue text-white rounded-xl p-3 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-110">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Item de consulta 2 -->
-                    <div class="p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 cursor-pointer transition-all duration-300 group"
-                        data-index="1">
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
-                            <div>
-                                <h3
-                                    class="font-bold text-gray-900 text-lg group-hover:text-gov-blue transition-colors duration-200">
-                                    Revisão da legislação ambiental municipal</h3>
-                                <p class="text-sm text-gray-500 mt-1 font-medium">ID: CP-2023-015</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500 text-sm font-medium">Encerramento:</p>
-                                <p class="font-semibold text-gray-900 mt-1">30/07/2023</p>
-                            </div>
-                            <div>
-                                <span
-                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-orange-100 text-orange-700 border border-orange-200">
-                                    <i class="fas fa-comments mr-2"></i> 8 pendentes
-                                </span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span
-                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-green-100 text-green-700 border border-green-200">
-                                    <i class="fas fa-play-circle mr-2"></i> Ativa
-                                </span>
-                                <button
-                                    class="bg-gradient-to-r from-gov-blue-light to-gov-blue-dark hover:from-gov-blue-dark hover:to-gov-blue text-white rounded-xl p-3 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-110">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Item de consulta 3 -->
-                    <div class="p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 cursor-pointer transition-all duration-300 group"
-                        data-index="2">
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
-                            <div>
-                                <h3
-                                    class="font-bold text-gray-900 text-lg group-hover:text-gov-blue transition-colors duration-200">
-                                    Plano de educação digital nas escolas públicas</h3>
-                                <p class="text-sm text-gray-500 mt-1 font-medium">ID: CP-2023-013</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500 text-sm font-medium">Encerramento:</p>
-                                <p class="font-semibold text-gray-900 mt-1">10/07/2023</p>
-                            </div>
-                            <div>
-                                <span
-                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600 border border-gray-200">
-                                    <i class="fas fa-check mr-2"></i> Sem pendentes
-                                </span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span
-                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-red-100 text-red-700 border border-red-200">
-                                    <i class="fas fa-ban mr-2"></i> Encerrada
-                                </span>
-                                <button
-                                    class="bg-gradient-to-r from-gov-blue-light to-gov-blue-dark hover:from-gov-blue-dark hover:to-gov-blue text-white rounded-xl p-3 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-110">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Item de consulta 4 -->
-                    <div class="p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 cursor-pointer transition-all duration-300 group"
-                        data-index="3">
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
-                            <div>
-                                <h3
-                                    class="font-bold text-gray-900 text-lg group-hover:text-gov-blue transition-colors duration-200">
-                                    Expansão da coleta seletiva de lixo</h3>
-                                <p class="text-sm text-gray-500 mt-1 font-medium">ID: CP-2023-016</p>
-                            </div>
-                            <div>
-                                <p class="text-gray-500 text-sm font-medium">Encerramento:</p>
-                                <p class="font-semibold text-gray-900 mt-1">25/08/2023</p>
-                            </div>
-                            <div>
-                                <span
-                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-orange-100 text-orange-700 border border-orange-200">
-                                    <i class="fas fa-comments mr-2"></i> 3 pendentes
-                                </span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span
-                                    class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-green-100 text-green-700 border border-green-200">
-                                    <i class="fas fa-play-circle mr-2"></i> Ativa
-                                </span>
-                                <button
-                                    class="bg-gradient-to-r from-gov-blue-light to-gov-blue-dark hover:from-gov-blue-dark hover:to-gov-blue text-white rounded-xl p-3 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-110">
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Paginação -->
-                <div class="flex justify-between items-center p-6 border-t border-gray-100 bg-gray-50">
-                    <p class="text-sm text-gray-600 font-medium">Mostrando 4 de 24 consultas</p>
-                    <div class="flex space-x-2">
-                        <button
-                            class="bg-white border border-gray-200 rounded-xl p-3 hover:bg-gray-50 transition-colors duration-200 shadow-sm">
-                            <i class="fas fa-chevron-left text-gray-600"></i>
-                        </button>
-                        <button
-                            class="bg-gradient-to-r from-gov-blue to-gov-blue-dark text-white rounded-xl w-10 h-10 shadow-lg font-medium">1</button>
-                        <button
-                            class="bg-white border border-gray-200 rounded-xl w-10 h-10 hover:bg-gray-50 transition-colors duration-200 shadow-sm font-medium text-gray-700">2</button>
-                        <button
-                            class="bg-white border border-gray-200 rounded-xl w-10 h-10 hover:bg-gray-50 transition-colors duration-200 shadow-sm font-medium text-gray-700">3</button>
-                        <button
-                            class="bg-white border border-gray-200 rounded-xl p-3 hover:bg-gray-50 transition-colors duration-200 shadow-sm">
-                            <i class="fas fa-ellipsis-h text-gray-600"></i>
-                        </button>
-                        <button
-                            class="bg-white border border-gray-200 rounded-xl w-10 h-10 hover:bg-gray-50 transition-colors duration-200 shadow-sm font-medium text-gray-700">6</button>
-                        <button
-                            class="bg-white border border-gray-200 rounded-xl p-3 hover:bg-gray-50 transition-colors duration-200 shadow-sm">
-                            <i class="fas fa-chevron-right text-gray-600"></i>
-                        </button>
-                    </div>
+                <div class="divide-y divide-gray-100" id="consultation-list-items">
                 </div>
             </div>
 
-            <!-- Tela 2: Detalhes da Consulta (oculta inicialmente) -->
-            <div id="consultationDetail" class="hidden">
-                <!-- Cabeçalho detalhe -->
-                <div class="mb-6">
-                    <button id="backToList" class="text-gov-blue hover:text-gov-blue-dark mb-4 flex items-center">
-                        <i class="fas fa-arrow-left mr-2"></i> Voltar para a lista
+            <div id="pagination-controls" class="flex justify-center items-center mt-8 space-x-2"></div>
+        </div>
+
+        <div id="consultationDetail" class="hidden">
+        </div>
+        
+        <div id="rejection-reason-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 overflow-y-auto h-full w-full z-50">
+            <div class="relative top-20 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
+                <h3 class="text-lg font-bold text-gray-900 mb-4">Motivo da Rejeição</h3>
+                <textarea id="rejection-reason-text" rows="4" class="w-full border border-gray-300 rounded-md px-3 py-2" placeholder="Descreva o motivo pelo qual o comentário está sendo rejeitado..."></textarea>
+                <div class="flex justify-end space-x-2 mt-4">
+                    <button id="cancel-rejection" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Cancelar</button>
+                    <button id="confirm-rejection" class="px-4 py-2 bg-gov-red text-white rounded-md hover:bg-red-700">Confirmar Rejeição</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="email-preview-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 overflow-y-auto h-full w-full z-50">
+            <div class="relative top-10 mx-auto p-5 border w-full max-w-2xl shadow-lg rounded-md bg-white">
+                 <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <h3 class="text-xl font-bold text-gray-900">Pré-visualização do E-mail de Rejeição</h3>
+                    <button id="close-email-preview" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
                     </button>
-                    <div class="flex flex-wrap justify-between items-start">
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <p class="text-sm text-gray-600"><strong>Para:</strong> <span id="email-user-name"></span></p>
+                    <p class="text-sm text-gray-600"><strong>Assunto:</strong> Seu comentário na Consulta Pública "<span id="email-consultation-title"></span>"</p>
+                    <div class="mt-4 border-t pt-4">
+                        <p class="text-gray-800">Olá, <span id="email-user-name-body"></span>.</p>
+                        <p class="text-gray-800 mt-2">Agradecemos sua participação na consulta pública.</p>
+                        <p class="text-gray-800 mt-2">Seu comentário, reproduzido abaixo, não foi aprovado por não seguir nossas diretrizes de uso.</p>
+                        <div class="my-4 p-3 bg-gray-200 border-l-4 border-gray-400 italic text-gray-700">
+                           " <span id="email-comment-text"></span> "
+                        </div>
+                        <p class="text-gray-800"><strong>Motivo da Rejeição:</strong></p>
+                        <p class="text-gray-800 mt-1" id="email-rejection-reason"></p>
+
+                        <p class="text-gray-800 mt-4">Para mais detalhes, consulte nossos termos de uso na plataforma. Agradecemos a sua compreensão.</p>
+                        <p class="text-gray-800 mt-3 font-semibold">Atenciosamente,</br>Equipe de Moderação</p>
+                    </div>
+                </div>
+                 <div class="flex justify-end mt-4">
+                    <button id="close-email-preview-btn" class="px-4 py-2 bg-gov-blue text-white font-medium rounded-md hover:bg-gov-blue-dark transition-colors">Fechar</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="new-consultation-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div class="relative top-10 mx-auto p-5 border w-full max-w-4xl shadow-lg rounded-md bg-white">
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <h3 class="text-xl font-bold text-gray-900">Nova Consulta Pública</h3>
+                    <button onclick="closeNewConsultationModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="max-h-[70vh] overflow-y-auto px-1">
+                    <form id="new-consultation-form" class="space-y-6">
+                         <div>
+                            <label for="consultation-title-modal" class="block text-sm font-medium text-gray-700 mb-1">Título da Consulta Pública*</label>
+                            <input type="text" id="consultation-title-modal" name="title" required
+                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-gov-blue-light focus:border-gov-blue-light"
+                                placeholder="Ex: Política de Atendimento às Vítimas de Violência Doméstica">
+                        </div>
+                        
                         <div>
-                            <h1 class="text-2xl font-bold text-gray-900">Modernização do transporte público urbano</h1>
-                            <div class="flex flex-wrap items-center gap-2 mt-2">
-                                <span class="status-badge bg-gov-green/20 text-gov-green">
-                                    <i class="fas fa-play-circle mr-1"></i> Ativa
-                                </span>
-                                <span class="text-gray-600">ID: CP-2023-014</span>
-                                <span class="text-gray-600">Período: 01/06/2023 até 15/08/2023</span>
+                            <label for="consultation-description" class="block text-sm font-medium text-gray-700 mb-1">Descrição*</label>
+                            <textarea id="consultation-description" name="description" rows="4" required
+                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-gov-blue-light focus:border-gov-blue-light"
+                                placeholder="Descreva o objetivo e a importância desta consulta pública..."></textarea>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="responsible-unit" class="block text-sm font-medium text-gray-700 mb-1">Unidade Responsável*</label>
+                                <select id="responsible-unit" name="responsibleUnit" required
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-gov-blue-light focus:border-gov-blue-light">
+                                    <option value="">Selecione a unidade responsável</option>
+                                    <option value="gabinete">Gabinete do Procurador-Geral</option>
+                                    <option value="secretaria">Secretaria de Administração</option>
+                                    <option value="nucleo">Núcleo de Direitos Humanos</option>
+                                    <option value="coordenadoria">Coordenadoria de Políticas Públicas</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Categoria*</label>
+                                <select id="category" name="category" required
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-gov-blue-light focus:border-gov-blue-light">
+                                    <option value="">Selecione a categoria</option>
+                                    <option value="saude">Saúde</option>
+                                    <option value="educacao">Educação</option>
+                                    <option value="seguranca">Segurança Pública</option>
+                                    <option value="transporte">Transporte</option>
+                                    <option value="meio-ambiente">Meio Ambiente</option>
+                                    <option value="direitos-humanos">Direitos Humanos</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="flex gap-2 mt-2 sm:mt-0">
-                            <button class="bg-gov-blue hover:bg-gov-blue-dark text-white px-4 py-2 rounded-md">
-                                <i class="fas fa-edit mr-2"></i> Editar
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="start-date" class="block text-sm font-medium text-gray-700 mb-1">Data de Início*</label>
+                                <input type="date" id="start-date" name="startDate" required
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-gov-blue-light focus:border-gov-blue-light">
+                            </div>
+                            <div>
+                                <label for="end-date" class="block text-sm font-medium text-gray-700 mb-1">Data de Término*</label>
+                                <input type="date" id="end-date" name="endDate" required
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-gov-blue-light focus:border-gov-blue-light">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="related-pga" class="block text-sm font-medium text-gray-700 mb-1">PGA Relacionado (opcional)</label>
+                                <input type="text" id="related-pga" name="relatedPga"
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-gov-blue-light focus:border-gov-blue-light"
+                                    placeholder="Ex: PGA 2025 - Combate à Violência Doméstica">
+                            </div>
+                            <div>
+                                <label for="request-origin" class="block text-sm font-medium text-gray-700 mb-1">Origem da Solicitação*</label>
+                                <input type="text" id="request-origin" name="requestOrigin" required
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-gov-blue-light focus:border-gov-blue-light"
+                                    placeholder="Ex: Gabinete do Procurador-Geral, Ofício nº 123/2025">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="reference-document" class="block text-sm font-medium text-gray-700 mb-1">Documento de Referência (opcional)</label>
+                            <div class="flex items-center space-x-2">
+                                <input type="file" id="reference-document" name="referenceDocument" accept=".pdf,.doc,.docx" class="hidden">
+                                <label for="reference-document" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer hover:bg-gray-300 transition-colors">
+                                    Escolher arquivo
+                                </label>
+                                <span id="file-name" class="text-sm text-gray-500">Nenhum arquivo escolhido</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Formatos aceitos: PDF, DOC, DOCX. Tamanho máximo: 10MB</p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Perguntas da Consulta Pública</label>
+                            <div id="questions-container" class="space-y-3 mb-3">
+                                <div class="question-item flex items-center space-x-2">
+                                    <input type="text" name="questions[]" 
+                                        class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:ring-gov-blue-light focus:border-gov-blue-light"
+                                        placeholder="Digite uma pergunta para a consulta pública...">
+                                    <button type="button" onclick="removeQuestion(this)" class="text-gov-red hover:text-red-700">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addQuestion()" class="flex items-center text-gov-blue hover:text-gov-blue-dark font-medium">
+                                <i class="fas fa-plus mr-1"></i>
+                                Adicionar Pergunta
                             </button>
-                            <button
-                                class="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-md">
-                                <i class="fas fa-file-export mr-2"></i> Exportar
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input id="terms" name="terms" type="checkbox" required
+                                    class="h-4 w-4 text-gov-blue focus:ring-gov-blue-light border-gray-300 rounded">
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="terms" class="font-medium text-gray-700">
+                                    Confirmo que esta consulta pública está de acordo com os termos de uso e política de privacidade da plataforma
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end space-x-3 pt-4 border-t">
+                            <button type="button" onclick="closeNewConsultationModal()"
+                                class="px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 transition-colors">
+                                Cancelar
+                            </button>
+                            <button type="submit"
+                                class="px-4 py-2 bg-gov-blue text-white font-medium rounded-md hover:bg-gov-blue-dark transition-colors">
+                                Criar Consulta
                             </button>
                         </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Informações da Consulta -->
-                    <div class="lg:col-span-2">
-                        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                            <h2 class="text-lg font-bold text-gray-900 mb-4">Detalhes da Consulta</h2>
-                            <div class="space-y-4">
-                                <div>
-                                    <h3 class="text-sm font-medium text-gray-700">Descrição</h3>
-                                    <p class="mt-1 text-gray-900">O objetivo desta consulta é recolher contribuições dos
-                                        cidadãos para o plano de modernização do sistema de transporte público urbano,
-                                        com
-                                        foco em acessibilidade, sustentabilidade e integração modal.</p>
-                                </div>
-                                <div>
-                                    <h3 class="text-sm font-medium text-gray-700">Perguntas da Consulta</h3>
-                                    <ol class="mt-1 space-y-2 ml-4 list-decimal">
-                                        <li class="text-gray-900">Quais são os maiores problemas que você enfrenta
-                                            atualmente com o transporte público?</li>
-                                        <li class="text-gray-900">Que melhorias priorizar na modernização do sistema?
-                                        </li>
-                                        <li class="text-gray-900">Como tornar o transporte público mais atrativo?</li>
-                                        <li class="text-gray-900">Sugira medidas para melhorar a integração entre
-                                            diferentes
-                                            modais.</li>
-                                    </ol>
-                                </div>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <h3 class="text-sm font-medium text-gray-700">Data de Início</h3>
-                                        <p class="mt-1 text-gray-900">01/06/2023</p>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-sm font-medium text-gray-700">Data de Encerramento</h3>
-                                        <p class="mt-1 text-gray-900">15/08/2023</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Estatísticas de participação -->
-                        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                            <h2 class="text-lg font-bold text-gray-900 mb-4">Estatísticas de Participação</h2>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                <div class="text-center p-4 border rounded-lg">
-                                    <p class="text-3xl font-bold text-gov-blue">127</p>
-                                    <p class="text-gray-600">Participantes</p>
-                                </div>
-                                <div class="text-center p-4 border rounded-lg">
-                                    <p class="text-3xl font-bold text-gov-orange">42</p>
-                                    <p class="text-gray-600">Contribuições</p>
-                                </div>
-                                <div class="text-center p-4 border rounded-lg">
-                                    <p class="text-3xl font-bold text-gov-green">58%</p>
-                                    <p class="text-gray-600">Temas relevantes</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Área de Moderação -->
-                    <div>
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden sticky top-6">
-                            <!-- Abas de status -->
-                            <div class="border-b">
-                                <div class="flex">
-                                    <button class="px-4 py-3 font-medium text-sm relative flex-1 text-center">
-                                        <span class="mr-1">Pendentes</span>
-                                        <span class="status-badge bg-gov-orange text-white">15</span>
-                                    </button>
-                                    <button class="px-4 py-3 font-medium text-sm text-gray-500 flex-1 text-center">
-                                        <span class="mr-1">Aprovados</span>
-                                        <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs">27</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Lista de comentários pendentes -->
-                            <div class="p-4 max-h-[70vh] overflow-y-auto">
-                                <div class="flex justify-between items-center mb-4">
-                                    <h2 class="text-lg font-bold text-gray-900">Comentários Pendentes</h2>
-                                    <span class="text-sm text-gov-blue">15 novos</span>
-                                </div>
-
-                                <!-- Comentário 1 -->
-                                <div class="comment-card pending-comment mb-4">
-                                    <div class="flex justify-between">
-                                        <div>
-                                            <span class="font-medium text-gray-900">Carlos Oliveira</span>
-                                            <span class="text-sm text-gray-500 ml-2">(Não anônimo)</span>
-                                        </div>
-                                        <span class="text-sm text-gray-500">10/07/2023 14:23</span>
-                                    </div>
-                                    <p class="mt-2 text-gray-800">"Os ônibus estão sempre lotados nos horários de pico.
-                                        Sugiro aumentar a frota e criar linhas expressas para agilizar o deslocamento
-                                        nos
-                                        principais corredores da cidade."</p>
-                                    <div class="flex mt-4 space-x-2">
-                                        <button
-                                            class="approve-btn flex-1 bg-gov-green hover:bg-gov-green/90 text-white py-2 px-4 rounded-md flex items-center justify-center">
-                                            <i class="fas fa-check mr-2"></i> Aprovar
-                                        </button>
-                                        <button
-                                            class="reject-btn flex-1 bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center">
-                                            <i class="fas fa-times mr-2"></i> Recusar
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Comentário 2 -->
-                                <div class="comment-card pending-comment mb-4">
-                                    <div class="flex justify-between">
-                                        <div>
-                                            <span class="font-medium text-gray-900">Anônimo</span>
-                                        </div>
-                                        <span class="text-sm text-gray-500">11/07/2023 09:41</span>
-                                    </div>
-                                    <p class="mt-2 text-gray-800">"Falta acessibilidade para pessoas com mobilidade
-                                        reduzida. Muitos ônibus não têm elevadores ou rampas que funcionem
-                                        adequadamente."
-                                    </p>
-                                    <div class="flex mt-4 space-x-2">
-                                        <button
-                                            class="approve-btn flex-1 bg-gov-green hover:bg-gov-green/90 text-white py-2 px-4 rounded-md flex items-center justify-center">
-                                            <i class="fas fa-check mr-2"></i> Aprovar
-                                        </button>
-                                        <button
-                                            class="reject-btn flex-1 bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center">
-                                            <i class="fas fa-times mr-2"></i> Recusar
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Comentário 3 -->
-                                <div class="comment-card pending-comment mb-4">
-                                    <div class="flex justify-between">
-                                        <div>
-                                            <span class="font-medium text-gray-900">Mariana Santos</span>
-                                            <span class="text-sm text-gray-500 ml-2">(Não anônimo)</span>
-                                        </div>
-                                        <span class="text-sm text-gray-500">11/07/2023 16:15</span>
-                                    </div>
-                                    <p class="mt-2 text-gray-800">"Sugiro a implementação de bilhetes digitais
-                                        integrados
-                                        que possam ser usados em diferentes modais de transporte, como ônibus, metrô e
-                                        trem."</p>
-                                    <div class="flex mt-4 space-x-2">
-                                        <button
-                                            class="approve-btn flex-1 bg-gov-green hover:bg-gov-green/90 text-white py-2 px-4 rounded-md flex items-center justify-center">
-                                            <i class="fas fa-check mr-2"></i> Aprovar
-                                        </button>
-                                        <button
-                                            class="reject-btn flex-1 bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center">
-                                            <i class="fas fa-times mr-2"></i> Recusar
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="text-center mt-4">
-                                    <button class="text-gov-blue hover:text-gov-blue-dark font-medium">
-                                        <i class="fas fa-arrow-down mr-1"></i> Carregar mais
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-
-        <!-- Modal de confirmação de recusa -->
-        <div id="rejectModal"
-            class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-bold text-gray-900">Confirmar Recusa</h3>
-                        <button id="closeModal" class="text-gray-500 hover:text-gray-700">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <p class="text-gray-700 mb-6">Tem certeza que deseja recusar este comentário? Um e-mail será enviado
-                        ao
-                        participante explicando o motivo da recusa.</p>
-
-                    <div class="bg-gray-100 p-4 rounded-md mb-6">
-                        <h4 class="text-sm font-medium text-gray-700 mb-2">Conteúdo do e-mail:</h4>
-                        <p class="text-sm text-gray-900 mb-1"><strong>Assunto:</strong> Seu comentário na Consulta
-                            Pública
-                            'Modernização do transporte público urbano' foi moderado.</p>
-                        <p class="text-sm text-gray-900"><strong>Mensagem:</strong> "Olá, <span
-                                id="userNamePlaceholder">[Nome do Cidadão]</span>. Agradecemos sua participação na
-                            consulta
-                            pública 'Modernização do transporte público urbano'. Seu comentário não pôde ser publicado
-                            pois
-                            não está em conformidade com nossas diretrizes de participação (ex: uso de linguagem
-                            inadequada,
-                            conteúdo fora de tópico ou spam). Agradecemos a sua compreensão."</p>
-                    </div>
-
-                    <div class="flex justify-end space-x-3">
-                        <button id="cancelReject" class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
-                            Cancelar
-                        </button>
-                        <button id="confirmReject"
-                            class="px-4 py-2 bg-gov-red hover:bg-gov-red/90 text-white rounded-md">
-                            <i class="fas fa-envelope mr-2"></i> Confirmar Recusa
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Rodapé -->
         <footer class="bg-white border-t mt-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="flex items-center">
-                        <i class="fas fa-landmark text-gov-blue text-xl mr-2"></i>
-                        <span class="text-lg font-semibold">Governo do Estado</span>
-                    </div>
-                    <div class="mt-4 md:mt-0 text-gray-600 text-sm">
-                        Portal do Gestor - Sistema de Consultas Públicas v1.0
-                    </div>
-                </div>
-                <div class="mt-6 text-center md:text-left text-gray-500 text-xs">
-                    <p>&copy; 2023 Secretaria de Governo Digital. Todos os direitos reservados.</p>
-                    <p class="mt-1">Sistema seguro, acessível e de uso exclusivo para gestores públicos autorizados.</p>
-                </div>
-            </div>
         </footer>
 
         <script>
-            // Dados mockados das consultas
+            // ### INÍCIO DO CÓDIGO JAVASCRIPT ###
+            let currentConsultation = null;
+            let currentPage = 1;
+            const itemsPerPage = 4;
+
             const consultations = [
-                {
-                    id: "CP-2023-014",
-                    title: "Modernização do transporte público urbano",
-                    status: "Ativa",
-                    endDate: "15/08/2023",
-                    startDate: "01/06/2023",
-                    pendingComments: 15,
-                    description: "O objetivo desta consulta é recolher contribuições dos cidadãos para o plano de modernização do sistema de transporte público urbano, com foco em acessibilidade, sustentabilidade e integração modal.",
-                    questions: [
-                        "Quais são os maiores problemas que você enfrenta atualmente com o transporte público?",
-                        "Que melhorias priorizar na modernização do sistema?",
-                        "Como tornar o transporte público mais atrativo?",
-                        "Sugira medidas para melhorar a integração entre diferentes modais."
-                    ],
-                    stats: {
-                        participants: 127,
-                        contributions: 42,
-                        relevantTopics: "58%"
-                    }
-                },
-                {
-                    id: "CP-2023-015",
-                    title: "Revisão da legislação ambiental municipal",
-                    status: "Ativa",
-                    endDate: "30/07/2023",
-                    startDate: "01/05/2023",
-                    pendingComments: 8,
-                    description: "Esta consulta visa coletar sugestões para a atualização da legislação ambiental municipal, focando em sustentabilidade e preservação.",
-                    questions: [
-                        "Como tornar a legislação ambiental mais efetiva?",
-                        "Quais áreas precisam de maior proteção?",
-                        "Que incentivos podem ser criados para práticas sustentáveis?"
-                    ],
-                    stats: {
-                        participants: 89,
-                        contributions: 35,
-                        relevantTopics: "62%"
-                    }
-                },
-                {
-                    id: "CP-2023-013",
-                    title: "Plano de educação digital nas escolas públicas",
-                    status: "Encerrada",
-                    endDate: "10/07/2023",
-                    startDate: "10/04/2023",
-                    pendingComments: 0,
-                    description: "Consulta para definir diretrizes do programa de educação digital nas escolas da rede pública.",
-                    questions: [
-                        "Quais tecnologias devem ser priorizadas?",
-                        "Como capacitar os professores?",
-                        "Que tipo de infraestrutura é necessária?"
-                    ],
-                    stats: {
-                        participants: 156,
-                        contributions: 78,
-                        relevantTopics: "75%"
-                    }
-                }
+                { id: 'CP-2025-001', title: 'Modernização do transporte público urbano', endDate: '15/08/2025', startDate: '15/07/2025', status: 'Ativa', comments: [{ user: 'Ana Silva', date: '20/07/2025', text: 'Comentário pendente 1.', status: 'pending', respondsToQuestionIndex: 0 }, { user: 'Bruno Costa', date: '21/07/2025', text: 'Comentário aprovado.', status: 'approved', respondsToQuestionIndex: 1 }] , questions: ["Pergunta 1?", "Pergunta 2?"]},
+                { id: 'CP-2025-002', title: 'Plano Diretor de Arborização Urbana', endDate: '30/09/2025', startDate: '01/09/2025', status: 'Ativa', comments: [{ user: 'Carla Dias', date: '22/07/2025', text: 'Comentário rejeitado.', status: 'rejected', respondsToQuestionIndex: 0 }], questions: ["Pergunta A?", "Pergunta B?"] },
+                { id: 'CP-2025-003', title: 'Reforma do Código de Obras Municipal', endDate: '20/06/2025', startDate: '20/05/2025', status: 'Encerrada', comments: [], questions: [] },
+                { id: 'CP-2025-004', title: 'Nova Política de Resíduos Sólidos', endDate: '10/10/2025', startDate: '10/09/2025', status: 'Ativa', comments: [{ user: 'Daniel Farias', date: '23/07/2025', text: 'Comentário pendente 2.', status: 'pending', respondsToQuestionIndex: 0 }], questions: ["P1?", "P2?"] },
+                { id: 'CP-2025-005', title: 'Criação de Ciclofaixas no Centro', endDate: '05/11/2025', startDate: '05/10/2025', status: 'Ativa', comments: [], questions: [] },
+                { id: 'CP-2025-006', title: 'Uso de Espaços Públicos para Eventos', endDate: '15/12/2025', startDate: '15/11/2025', status: 'Ativa', comments: [{ user: 'Eduarda Lima', date: '18/11/2025', text: 'Outro comentário pendente.', status: 'pending', respondsToQuestionIndex: 0 }], questions: ["Q1?"] },
+                { id: 'CP-2025-007', title: 'Programa de Hortas Comunitárias', endDate: '25/07/2025', startDate: '25/06/2025', status: 'Ativa', comments: [], questions: [] },
+                { id: 'CP-2025-008', title: 'Revisão do Plano de Saneamento Básico', endDate: '31/08/2025', startDate: '01/08/2025', status: 'Pendente', comments: [], questions: [] },
+                { id: 'CP-2024-009', title: 'Lei de Incentivo à Cultura Local', endDate: '10/01/2025', startDate: '10/12/2024', status: 'Encerrada', comments: [], questions: [] },
             ];
 
+            let currentCommentCard = null;
+
+            function approveComment(button) {
+                const card = button.closest('.comment-card');
+                card.classList.add('fade-out');
+                setTimeout(() => {
+                    card.remove();
+                }, 500);
+            }
+
+            function showRejectionModal(button) {
+                currentCommentCard = button.closest('.comment-card');
+                document.getElementById('rejection-reason-modal').classList.remove('hidden');
+            }
+
+            function confirmRejection() {
+                if (currentCommentCard) {
+                    const reason = document.getElementById('rejection-reason-text').value;
+                    if (!reason.trim()) {
+                        alert("Por favor, forneça um motivo para a rejeição.");
+                        return;
+                    }
+                    
+                    const userName = currentCommentCard.querySelector('.font-bold.text-gray-900').textContent;
+                    const commentText = currentCommentCard.querySelector('.text-gray-700.leading-relaxed').textContent;
+
+                    document.getElementById('email-user-name').textContent = userName;
+                    document.getElementById('email-consultation-title').textContent = currentConsultation.title;
+                    document.getElementById('email-user-name-body').textContent = userName;
+                    document.getElementById('email-comment-text').textContent = commentText;
+                    document.getElementById('email-rejection-reason').textContent = reason;
+                    
+                    closeRejectionReasonModal();
+                    document.getElementById('email-preview-modal').classList.remove('hidden');
+                }
+            }
+
+            function closeRejectionReasonModal() {
+                document.getElementById('rejection-reason-modal').classList.add('hidden');
+                document.getElementById('rejection-reason-text').value = '';
+            }
+            
+            function closeEmailPreview() {
+                document.getElementById('email-preview-modal').classList.add('hidden');
+                 if (currentCommentCard) {
+                    currentCommentCard.classList.add('fade-out');
+                    setTimeout(() => {
+                        currentCommentCard.remove();
+                        currentCommentCard = null;
+                    }, 500);
+                }
+            }
+
+
             function createConsultationDetailView(consultation) {
-                // Criar um container para os detalhes
+                currentConsultation = consultation;
                 const detailContainer = document.getElementById('consultationDetail');
-                detailContainer.innerHTML = `
-                    <div class="mb-6">
-                        <button id="backToList" class="text-gov-blue hover:text-gov-blue-dark mb-4 flex items-center">
-                            <i class="fas fa-arrow-left mr-2"></i> Voltar para a lista
-                        </button>
-                        <div class="flex flex-wrap justify-between items-start">
-                            <div>
-                                <h1 class="text-2xl font-bold text-gray-900">${consultation.title}</h1>
-                                <div class="flex flex-wrap items-center gap-2 mt-2">
-                                    <span class="status-badge bg-gov-green/20 text-gov-green">
-                                        <i class="fas fa-play-circle mr-1"></i> ${consultation.status}
-                                    </span>
-                                    <span class="text-gray-600">ID: ${consultation.id}</span>
-                                    <span class="text-gray-600">Período: ${consultation.startDate} até ${consultation.endDate}</span>
+                
+                const statusInfo = {
+                    'Ativa': { bg: 'bg-green-100', text: 'text-green-700', icon: 'fa-play-circle' },
+                    'Encerrada': { bg: 'bg-red-100', text: 'text-red-700', icon: 'fa-ban' },
+                    'Pendente': { bg: 'bg-yellow-100', text: 'text-yellow-700', icon: 'fa-clock' }
+                };
+                const currentStatus = statusInfo[consultation.status] || { bg: 'bg-gray-100', text: 'text-gray-700', icon: 'fa-question-circle' };
+
+                const questionsHtml = (consultation.questions || []).map(question => 
+                    `<li class="p-3 bg-gray-50 rounded-md border border-gray-200 text-gray-800">${question}</li>`
+                ).join('');
+
+                const commentsHtml = (consultation.comments || []).map(comment => {
+                    const statusClass = {
+                        pending: 'pending-comment',
+                        approved: 'approved-comment',
+                        rejected: 'rejected-comment'
+                    }[comment.status];
+                    
+                    const respondingToHtml = `
+                        <div class="mb-3 p-3 bg-gray-100 border-l-2 border-gray-300 rounded-r-md">
+                            <p class="text-xs text-gray-500 font-medium">Respondendo à pergunta #${comment.respondsToQuestionIndex + 1}:</p>
+                            <p class="text-sm font-semibold text-gray-700 italic">"${consultation.questions[comment.respondsToQuestionIndex]}"</p>
+                        </div>
+                    `;
+
+                    const actionButtonsHtml = `
+                        <div class="flex items-center justify-start md:justify-end space-x-2 mt-4 md:mt-0">
+                            <button onclick="approveComment(this)" class="px-3 py-2 bg-gov-green text-white rounded-md hover:bg-emerald-600 text-sm flex items-center justify-center transition-colors shadow-sm hover:shadow-md">
+                                <i class="fas fa-check mr-2"></i>Aprovar
+                            </button>
+                            <button onclick="showRejectionModal(this)" class="px-3 py-2 bg-gov-red text-white rounded-md hover:bg-red-600 text-sm flex items-center justify-center transition-colors shadow-sm hover:shadow-md">
+                                <i class="fas fa-times mr-2"></i>Rejeitar
+                            </button>
+                        </div>
+                    `;
+
+                    let finalHtml = `
+                        <div class="comment-card ${statusClass}">
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-x-4">
+                                <div class="md:col-span-3">
+                                    <div class="flex items-center mb-2">
+                                        <i class="fas fa-user-circle text-gray-400 mr-2"></i>
+                                        <p class="font-bold text-gray-900">${comment.user}</p>
+                                    </div>
+                                    ${comment.respondsToQuestionIndex !== undefined ? respondingToHtml : ''}
+                                    <p class="text-gray-700 leading-relaxed">${comment.text}</p>
+                                    <p class="text-xs text-gray-500 mt-3">${comment.date}</p>
+                                </div>
+                                <div class="md:col-span-1 flex items-center justify-end">
+                    `;
+
+                    if (comment.status === 'pending') {
+                        finalHtml += actionButtonsHtml;
+                    }
+                    
+                    finalHtml += `
                                 </div>
                             </div>
                         </div>
+                    `;
+                    return finalHtml;
+                }).join('');
+
+                detailContainer.innerHTML = `
+                    <div class="mb-6">
+                        <button onclick="goBackToList()" class="flex items-center text-gov-blue hover:text-gov-blue-dark font-semibold">
+                            <i class="fas fa-arrow-left mr-2"></i> Voltar para a lista
+                        </button>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-2">
-                            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                                <h2 class="text-lg font-bold text-gray-900 mb-4">Detalhes da Consulta</h2>
-                                <div class="space-y-4">
-                                    <div>
-                                        <h3 class="text-sm font-medium text-gray-700">Descrição</h3>
-                                        <p class="mt-1 text-gray-900">${consultation.description}</p>
-                                    </div>
-                                    <div>
-                                        <h3 class="text-sm font-medium text-gray-700">Perguntas da Consulta</h3>
-                                        <ol class="mt-1 space-y-2 ml-4 list-decimal">
-                                            ${consultation.questions.map(q => `<li class="text-gray-900">${q}</li>`).join('')}
-                                        </ol>
-                                    </div>
-                                </div>
+                    <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 space-y-8">
+                        <div>
+                            <div class="border-b pb-4">
+                                <h2 class="text-2xl md:text-3xl font-bold text-gray-900">${consultation.title}</h2>
+                                <p class="text-sm text-gray-500 mt-1 font-medium">ID: ${consultation.id}</p>
                             </div>
 
-                            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                                <h2 class="text-lg font-bold text-gray-900 mb-4">Estatísticas de Participação</h2>
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                    <div class="text-center p-4 border rounded-lg">
-                                        <p class="text-3xl font-bold text-gov-blue">${consultation.stats.participants}</p>
-                                        <p class="text-gray-600">Participantes</p>
-                                    </div>
-                                    <div class="text-center p-4 border rounded-lg">
-                                        <p class="text-3xl font-bold text-gov-orange">${consultation.stats.contributions}</p>
-                                        <p class="text-gray-600">Contribuições</p>
-                                    </div>
-                                    <div class="text-center p-4 border rounded-lg">
-                                        <p class="text-3xl font-bold text-gov-green">${consultation.stats.relevantTopics}</p>
-                                        <p class="text-gray-600">Temas relevantes</p>
-                                    </div>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-6">
+                                <div>
+                                    <p class="text-sm text-gray-500 font-medium">Status</p>
+                                    <span class="mt-1 inline-flex items-center px-3 py-2 rounded-full text-sm font-medium ${currentStatus.bg} ${currentStatus.text}">
+                                        <i class="fas ${currentStatus.icon} mr-2"></i> ${consultation.status}
+                                    </span>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 font-medium">Comentários Pendentes</p>
+                                    <p class="text-lg font-bold text-gray-900 mt-1">${(consultation.comments || []).filter(c => c.status === 'pending').length}</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 font-medium">Data de Início</p>
+                                    <p class="text-lg font-bold text-gray-900 mt-1">${consultation.startDate}</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 font-medium">Data de Encerramento</p>
+                                    <p class="text-lg font-bold text-gray-900 mt-1">${consultation.endDate}</p>
                                 </div>
                             </div>
+                        </div>
+                        
+                        <div class="bg-gov-gray-light rounded-xl p-6">
+                             <h3 class="font-bold text-lg text-gray-800 mb-3">Descrição da Consulta</h3>
+                             <p class="text-gray-700 leading-relaxed">${consultation.description || 'Nenhuma descrição fornecida.'}</p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-800 mb-3">Perguntas da Consulta</h3>
+                            <ol class="space-y-3">
+                                ${questionsHtml || '<p>Nenhuma pergunta nesta consulta.</p>'}
+                            </ol>
                         </div>
 
                         <div>
-                            <div class="bg-white rounded-lg shadow-md overflow-hidden sticky top-6">
-                                <div class="border-b">
-                                    <div class="flex">
-                                        <button id="pendingTab" class="px-4 py-3 font-medium text-sm relative flex-1 text-center bg-blue-50">
-                                            <span class="mr-1">Pendentes</span>
-                                            <span class="status-badge bg-gov-orange text-white">15</span>
-                                        </button>
-                                        <button id="approvedTab" class="px-4 py-3 font-medium text-sm text-gray-500 flex-1 text-center">
-                                            <span class="mr-1">Aprovados</span>
-                                            <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs">27</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div id="commentsContainer" class="p-4 max-h-[70vh] overflow-y-auto">
-                                    ${renderPendingComments()}
-                                </div>
+                            <h3 class="font-bold text-xl text-gray-800 mb-4">Moderação de Comentários</h3>
+                            <div class="space-y-4">
+                                ${commentsHtml || '<p class="text-gray-500">Nenhum comentário para moderar.</p>'}
                             </div>
                         </div>
                     </div>
                 `;
-
-                // Adicionar eventos para abas de comentários
-                setupCommentTabs();
-
-                // Adicionar evento de voltar
-                document.getElementById('backToList').addEventListener('click', function () {
-                    document.getElementById('consultationDetail').classList.add('hidden');
-                    document.getElementById('consultationList').classList.remove('hidden');
-                });
             }
 
-            function renderPendingComments() {
-                return `
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-bold text-gray-900">Comentários Pendentes</h2>
-                        <span class="text-sm text-gov-blue">15 novos</span>
-                    </div>
+            function goBackToList() {
+                document.getElementById('consultationDetail').classList.add('hidden');
+                document.getElementById('consultationList').classList.remove('hidden');
+                currentConsultation = null;
+            }
 
-                    <div class="comment-card pending-comment mb-4">
-                        <div class="flex justify-between">
-                            <div>
-                                <span class="font-medium text-gray-900">Carlos Oliveira</span>
-                                <span class="text-sm text-gray-500 ml-2">(Não anônimo)</span>
-                            </div>
-                            <span class="text-sm text-gray-500">10/07/2023 14:23</span>
-                        </div>
-                        <p class="mt-2 text-gray-800">"Os ônibus estão sempre lotados nos horários de pico. Sugiro aumentar a frota e criar linhas expressas para agilizar o deslocamento nos principais corredores da cidade."</p>
-                        <div class="flex mt-4 space-x-2">
-                            <button class="approve-btn flex-1 bg-gov-green hover:bg-gov-green/90 text-white py-2 px-4 rounded-md flex items-center justify-center">
-                                <i class="fas fa-check mr-2"></i> Aprovar
-                            </button>
-                            <button class="reject-btn flex-1 bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center">
-                                <i class="fas fa-times mr-2"></i> Recusar
-                            </button>
-                        </div>
-                    </div>
+            function showNewConsultationModal() {
+                document.getElementById('new-consultation-modal').classList.remove('hidden');
+            }
+
+            function closeNewConsultationModal() {
+                document.getElementById('new-consultation-modal').classList.add('hidden');
+            }
+
+            function addQuestion() {
+                const container = document.getElementById('questions-container');
+                const newQuestion = document.createElement('div');
+                newQuestion.className = 'question-item flex items-center space-x-2';
+                newQuestion.innerHTML = `
+                    <input type="text" name="questions[]" 
+                        class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:ring-gov-blue-light focus:border-gov-blue-light"
+                        placeholder="Digite uma pergunta para a consulta pública...">
+                    <button type="button" onclick="removeQuestion(this)" class="text-gov-red hover:text-red-700">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
                 `;
+                container.appendChild(newQuestion);
             }
 
-            function renderApprovedComments() {
-                return `
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg font-bold text-gray-900">Comentários Aprovados</h2>
-                        <span class="text-sm text-gov-green">27 aprovados</span>
-                    </div>
-
-                    <div class="comment-card approved-comment mb-4">
-                        <div class="flex justify-between">
-                            <div>
-                                <span class="font-medium text-gray-900">Maria Silva</span>
-                                <span class="text-sm text-gray-500 ml-2">(Não anônimo)</span>
-                            </div>
-                            <span class="text-sm text-gray-500">05/07/2023 09:15</span>
-                        </div>
-                        <p class="mt-2 text-gray-800">"A integração entre diferentes modais de transporte é fundamental para melhorar a mobilidade urbana."</p>
-                    </div>
-                `;
+            function removeQuestion(button) {
+                const questionItem = button.closest('.question-item');
+                questionItem.remove();
             }
 
-            function setupCommentTabs() {
-                const pendingTab = document.getElementById('pendingTab');
-                const approvedTab = document.getElementById('approvedTab');
-                const commentsContainer = document.getElementById('commentsContainer');
-
-                pendingTab.addEventListener('click', () => {
-                    pendingTab.classList.add('bg-blue-50');
-                    approvedTab.classList.remove('bg-blue-50');
-                    commentsContainer.innerHTML = renderPendingComments();
-                    setupCommentActions();
-                });
-
-                approvedTab.addEventListener('click', () => {
-                    approvedTab.classList.add('bg-blue-50');
-                    pendingTab.classList.remove('bg-blue-50');
-                    commentsContainer.innerHTML = renderApprovedComments();
-                });
+            function changePage(page) {
+                if (page < 1) page = 1;
+                const totalPages = Math.ceil(consultations.length / itemsPerPage);
+                if (page > totalPages) page = totalPages;
+                currentPage = page;
+                renderConsultationList();
             }
+            
+            function renderPaginationControls(totalPages) {
+                const container = document.getElementById('pagination-controls');
+                container.innerHTML = '';
 
-            function setupCommentActions() {
-                // Ações de aprovar/reprovar comentários
-                document.querySelectorAll('.approve-btn').forEach(btn => {
-                    btn.addEventListener('click', function () {
-                        const commentCard = this.closest('.comment-card');
-                        alert('Comentário aprovado com sucesso!');
-                        commentCard.remove();
-                    });
-                });
+                // Botão Anterior
+                const prevButton = document.createElement('button');
+                prevButton.innerHTML = `<i class="fas fa-chevron-left"></i>`;
+                prevButton.className = 'px-4 py-2 rounded-md bg-white border border-gray-300 text-gray-700 hover:bg-gray-100';
+                if (currentPage === 1) {
+                    prevButton.disabled = true;
+                    prevButton.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+                prevButton.onclick = () => changePage(currentPage - 1);
+                container.appendChild(prevButton);
 
-                document.querySelectorAll('.reject-btn').forEach(btn => {
-                    btn.addEventListener('click', function () {
-                        const commentCard = this.closest('.comment-card');
-                        alert('Comentário recusado!');
-                        commentCard.remove();
-                    });
-                });
-            }
-
-            // Modificar o evento de clique nos cards
-            document.querySelectorAll('.divide-y > div').forEach(card => {
-                card.addEventListener('click', function () {
-                    const index = parseInt(this.getAttribute('data-index'), 10);
-                    const consultation = consultations[index];
-
-                    if (consultation) {
-                        // Criar a visualização de detalhes
-                        createConsultationDetailView(consultation);
-
-                        // Esconder lista, mostrar detalhes
-                        document.getElementById('consultationList').classList.add('hidden');
-                        document.getElementById('consultationDetail').classList.remove('hidden');
+                // Botões de Página
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.innerText = i;
+                    pageButton.className = `px-4 py-2 rounded-md border border-gray-300`;
+                    if (i === currentPage) {
+                        pageButton.className += ' bg-gov-blue text-white';
+                    } else {
+                        pageButton.className += ' bg-white text-gray-700 hover:bg-gray-100';
                     }
+                    pageButton.onclick = () => changePage(i);
+                    container.appendChild(pageButton);
+                }
+
+                // Botão Próximo
+                const nextButton = document.createElement('button');
+                nextButton.innerHTML = `<i class="fas fa-chevron-right"></i>`;
+                nextButton.className = 'px-4 py-2 rounded-md bg-white border border-gray-300 text-gray-700 hover:bg-gray-100';
+                if (currentPage === totalPages) {
+                    nextButton.disabled = true;
+                    nextButton.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+                nextButton.onclick = () => changePage(currentPage + 1);
+                container.appendChild(nextButton);
+            }
+
+            function renderConsultationList() {
+                const listContainer = document.getElementById('consultation-list-items');
+                listContainer.innerHTML = '';
+                
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const paginatedItems = consultations.slice(startIndex, endIndex);
+
+                paginatedItems.forEach((consult, index) => {
+                    const originalIndex = startIndex + index;
+                    const statusInfo = {
+                        'Ativa': { bg: 'bg-green-100', text: 'text-green-700', icon: 'fa-play-circle', label: 'Ativa' },
+                        'Encerrada': { bg: 'bg-red-100', text: 'text-red-700', icon: 'fa-ban', label: 'Encerrada' },
+                        'Pendente': { bg: 'bg-yellow-100', text: 'text-yellow-700', icon: 'fa-clock', label: 'Pendente' }
+                    };
+                    const currentStatus = statusInfo[consult.status] || { bg: 'bg-gray-100', text: 'text-gray-700', icon: 'fa-question-circle', label: 'Desconhecido'};
+                    const pendingCount = (consult.comments || []).filter(c => c.status === 'pending').length;
+
+                    const cardHtml = `
+                    <div class="p-6 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 cursor-pointer transition-all duration-300 group"
+                        data-index="${originalIndex}">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                            <div>
+                                <h3 class="font-bold text-gray-900 text-lg group-hover:text-gov-blue transition-colors duration-200">${consult.title}</h3>
+                                <p class="text-sm text-gray-500 mt-1 font-medium">ID: ${consult.id}</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-sm font-medium">Encerramento:</p>
+                                <p class="font-semibold text-gray-900 mt-1">${consult.endDate}</p>
+                            </div>
+                            <div>
+                                <span class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium bg-orange-100 text-orange-700 border border-orange-200">
+                                    <i class="fas fa-comments mr-2"></i> ${pendingCount} pendentes
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center px-3 py-2 rounded-full text-sm font-medium ${currentStatus.bg} ${currentStatus.text} border border-green-200">
+                                    <i class="fas ${currentStatus.icon} mr-2"></i> ${currentStatus.label}
+                                </span>
+                                <button class="bg-gradient-to-r from-gov-blue-light to-gov-blue-dark hover:from-gov-blue-dark hover:to-gov-blue text-white rounded-xl p-3 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-110">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    listContainer.innerHTML += cardHtml;
                 });
+
+                document.querySelectorAll('#consultation-list-items > div').forEach(card => {
+                    card.addEventListener('click', function () {
+                        const index = parseInt(this.getAttribute('data-index'), 10);
+                        const consultation = consultations[index];
+                        if (consultation) {
+                            createConsultationDetailView(consultation);
+                            document.getElementById('consultationList').classList.add('hidden');
+                            document.getElementById('consultationDetail').classList.remove('hidden');
+                            window.scrollTo(0, 0);
+                        }
+                    });
+                });
+
+                const totalPages = Math.ceil(consultations.length / itemsPerPage);
+                renderPaginationControls(totalPages);
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                renderConsultationList();
+                document.getElementById('newConsultationBtn').addEventListener('click', showNewConsultationModal);
+                
+                document.getElementById('confirm-rejection').addEventListener('click', confirmRejection);
+                document.getElementById('cancel-rejection').addEventListener('click', closeRejectionReasonModal);
+                document.getElementById('close-email-preview').addEventListener('click', closeEmailPreview);
+                document.getElementById('close-email-preview-btn').addEventListener('click', closeEmailPreview);
+
+
+                  const fileInput = document.getElementById('reference-document');
+                  const fileNameSpan = document.getElementById('file-name');
+                  
+                  if (fileInput && fileNameSpan) {
+                      fileInput.addEventListener('change', function() {
+                          if (this.files.length > 0) {
+                              const file = this.files[0];
+                              if (file.size > 10 * 1024 * 1024) { // 10MB
+                                  alert('O arquivo excede o tamanho máximo de 10MB.');
+                                  this.value = '';
+                                  fileNameSpan.textContent = 'Nenhum arquivo escolhido';
+                                  return;
+                              }
+                              fileNameSpan.textContent = file.name;
+                          } else {
+                              fileNameSpan.textContent = 'Nenhum arquivo escolhido';
+                          }
+                      });
+                  }
+                  
+                  const form = document.getElementById('new-consultation-form');
+                  if (form) {
+                      form.addEventListener('submit', function(e) {
+                          e.preventDefault();
+                          closeNewConsultationModal();
+                          alert('Consulta pública criada com sucesso! (Simulação)');
+                          form.reset();
+                          if(fileNameSpan) fileNameSpan.textContent = 'Nenhum arquivo escolhido';
+                      });
+                  }
             });
         </script>
     </div>

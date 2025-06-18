@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Consulta - Portal do Gestor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gov-blue': '#1d4e89',
+                        'gov-blue-light': '#3485d0',
+                        'gov-blue-dark': '#003366',
+                        'gov-green': '#4caf50',
+                        'gov-red': '#f44336',
+                        'gov-orange': '#ff9800',
+                        'gov-gray-light': '#f8f9fa',
+                        'gov-gray': '#e9ecef',
+                        'gov-gray-dark': '#6c757d'
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/css">
+        .status-badge { @apply px-3 py-1 rounded-full text-xs font-bold; }
+        .comment-card { @apply border-l-4 border-gray-300 pl-4 py-4; }
+        .pending-comment { border-left-color: #ff9800; }
+        .approved-comment { border-left-color: #4caf50; }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <nav class="bg-gov-blue text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-landmark text-white text-xl mr-2"></i>
+                        <span class="text-xl font-semibold">Portal do Gestor</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main id="consultation-detail-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        </main>
+
+    <footer class="bg-white border-t mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+             <p class="text-center text-gray-500 text-xs">&copy; 2023 Secretaria de Governo Digital. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+<script>
+    // Dados mockados (copiados do seu arquivo original para esta página)
+    const consultationsData = {
+        "CP-2023-014": {
+            id: "CP-2023-014",
+            title: "Modernização do transporte público urbano",
+            status: "Ativa",
+            endDate: "15/08/2023",
+            startDate: "01/06/2023",
+            pendingComments: 15,
+            description: "O objetivo desta consulta é recolher contribuições dos cidadãos para o plano de modernização do sistema de transporte público urbano, com foco em acessibilidade, sustentabilidade e integração modal.",
+            questions: [
+                "Quais são os maiores problemas que você enfrenta atualmente com o transporte público?",
+                "Que melhorias priorizar na modernização do sistema?",
+                "Como tornar o transporte público mais atrativo?",
+                "Sugira medidas para melhorar a integração entre diferentes modais."
+            ],
+            stats: { participants: 127, contributions: 42, relevantTopics: "58%" }
+        },
+        "CP-2023-015": {
+            id: "CP-2023-015",
+            title: "Revisão da legislação ambiental municipal",
+            status: "Ativa",
+            endDate: "30/07/2023",
+            startDate: "01/05/2023",
+            pendingComments: 8,
+            description: "Esta consulta visa coletar sugestões para a atualização da legislação ambiental municipal, focando em sustentabilidade e preservação.",
+            questions: [
+                "Como tornar a legislação ambiental mais efetiva?",
+                "Quais áreas precisam de maior proteção?",
+                "Que incentivos podem ser criados para práticas sustentáveis?"
+            ],
+            stats: { participants: 89, contributions: 35, relevantTopics: "62%" }
+        },
+        "CP-2023-013": {
+            id: "CP-2023-013",
+            title: "Plano de educação digital nas escolas públicas",
+            status: "Encerrada",
+            endDate: "10/07/2023",
+            startDate: "10/04/2023",
+            pendingComments: 0,
+            description: "Consulta para definir diretrizes do programa de educação digital nas escolas da rede pública.",
+            questions: [
+                "Quais tecnologias devem ser priorizadas?",
+                "Como capacitar os professores?",
+                "Que tipo de infraestrutura é necessária?"
+            ],
+            stats: { participants: 156, contributions: 78, relevantTopics: "75%" }
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const consultationId = params.get('id');
+        const consultation = consultationsData[consultationId];
+
+        const container = document.getElementById('consultation-detail-container');
+        
+        if (consultation) {
+            renderConsultationDetails(container, consultation);
+        } else {
+            container.innerHTML = `<h1 class="text-center text-red-500 font-bold">Consulta não encontrada!</h1>`;
+        }
+    });
+
+    function renderConsultationDetails(container, data) {
+        // Define a cor e o ícone do status dinamicamente
+        const statusConfig = {
+            'Ativa': { color: 'bg-gov-green/20 text-gov-green', icon: 'fa-play-circle' },
+            'Encerrada': { color: 'bg-gov-red/20 text-gov-red', icon: 'fa-ban' }
+        };
+        const currentStatus = statusConfig[data.status] || { color: 'bg-gov-gray/20 text-gov-gray', icon: 'fa-question-circle' };
+
+        container.innerHTML = `
+            <div class="mb-6">
+                <a href="gestor.html" class="text-gov-blue hover:text-gov-blue-dark mb-4 flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i> Voltar para a lista
+                </a>
+                <div class="flex flex-wrap justify-between items-start">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">${data.title}</h1>
+                        <div class="flex flex-wrap items-center gap-2 mt-2">
+                            <span class="status-badge ${currentStatus.color}">
+                                <i class="fas ${currentStatus.icon} mr-1"></i> ${data.status}
+                            </span>
+                            <span class="text-gray-600">ID: ${data.id}</span>
+                            <span class="text-gray-600">Período: ${data.startDate} até ${data.endDate}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                        <h2 class="text-lg font-bold text-gray-900 mb-4">Detalhes da Consulta</h2>
+                        <p class="mt-1 text-gray-900">${data.description}</p>
+                        <h3 class="text-sm font-medium text-gray-700 mt-4">Perguntas da Consulta</h3>
+                        <ol class="mt-1 space-y-2 ml-4 list-decimal">${data.questions.map(q => `<li class="text-gray-900">${q}</li>`).join('')}</ol>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden sticky top-6">
+                        <div class="p-4 max-h-[70vh] overflow-y-auto">
+                            <h2 class="text-lg font-bold text-gray-900">Comentários Pendentes</h2>
+                            <div class="comment-card pending-comment mb-4 mt-4">
+                                <p class="mt-2 text-gray-800">"Os ônibus estão sempre lotados nos horários de pico. Sugiro aumentar a frota."</p>
+                                <div class="flex mt-4 space-x-2">
+                                    <button class="flex-1 bg-gov-green hover:bg-opacity-90 text-white py-2 px-4 rounded-md">Aprovar</button>
+                                    <button class="flex-1 bg-gov-red hover:bg-opacity-90 text-white py-2 px-4 rounded-md">Recusar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+</script>
+
+</body>
+</html>

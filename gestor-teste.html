@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor - Consultas Públicas</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
@@ -26,7 +27,6 @@
 </head>
 
 <body class="bg-gray-50 min-h-screen">
-    <!-- Header -->
     <header class="bg-white shadow-sm border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -34,24 +34,29 @@
                     <h1 class="text-xl font-semibold text-gray-900">Portal de Consultas Públicas</h1>
                 </div>
                 <nav class="flex items-center space-x-4">
-
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-user-circle mr-2"></i>
+                            <span class="font-medium">Gestor Administrativo</span>
+                        </div>
+                        <button class="text-white hover:text-gray-200">
+                            <i class="fas fa-sign-out-alt text-gray-600"></i>
+                        </button>
+                    </div>
                 </nav>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <!-- Tela 1: Painel de Consultas (Listagem Principal) -->
         <div id="consultation-list" class="space-y-6">
             <div class="flex justify-between items-center">
                 <div>
                     <h2 class="text-2xl font-bold text-gray-900">Consultas Públicas</h2>
                     <p class="text-gray-600 mt-1">Gerencie e modere as consultas públicas</p>
                 </div>
-                <button
-                    onclick="showNewConsultationModal()"
+                <button onclick="showNewConsultationModal()"
                     class="flex items-center px-4 py-2 bg-primary-600 text-white font-medium rounded-md hover:bg-primary-700 transition-colors">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
@@ -60,111 +65,65 @@
                 </button>
             </div>
 
-            <!-- Filtros e Busca -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <div class="grid md:grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Filtro por Status</label>
-                        <select
-                            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-primary-500 focus:border-primary-500">
-                            <option>Todas</option>
-                            <option>Ativas</option>
-                            <option>Encerradas</option>
-                            <option>Pendente de Moderação</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Buscar por Título</label>
-                        <div class="relative">
-                            <input type="text" placeholder="Digite o título..."
-                                class="w-full border border-gray-300 rounded-md pl-10 pr-3 py-2 text-sm focus:ring-primary-500 focus:border-primary-500">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-end">
-                        <button
-                            class="w-full px-4 py-2 bg-primary-600 text-white font-medium rounded-md hover:bg-primary-700 transition-colors flex items-center justify-center">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.414A1 1 0 013 6.707V4z">
-                                </path>
-                            </svg>
-                            Aplicar Filtros
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Cards de Estatísticas -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Total de Consultas -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 border-l-4 border-l-blue-500">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm font-medium text-gray-600">Total de Consultas</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-2">24</p>
+                            <p class="text-sm font-medium text-gray-600">Consultas Registradas</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-2" data-counter="registradas">8</p>
                         </div>
                         <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                             <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
                                 </path>
                             </svg>
                         </div>
                     </div>
                 </div>
 
-                <!-- Consultas Ativas -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 border-l-4 border-l-green-500">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-600">Consultas Ativas</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-2">8</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-2" data-counter="ativas">42</p>
                         </div>
                         <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                             <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.5a1.5 1.5 0 001.5-1.5V9a1.5 1.5 0 00-1.5-1.5H9m4.5 5H14a1.5 1.5 0 001.5-1.5V13a1.5 1.5 0 00-1.5-1.5H13.5m-9-2.25h.008v.008H4.5V10.5z">
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z">
                                 </path>
                             </svg>
                         </div>
                     </div>
                 </div>
 
-                <!-- Pendente de Moderação -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 border-l-4 border-l-orange-500">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm font-medium text-gray-600">Pendente de Moderação</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-2">42</p>
-                        </div>
-                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
-                                </path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Consultas Encerradas -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 border-l-4 border-l-red-500">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-gray-600">Consultas Encerradas</p>
-                            <p class="text-3xl font-bold text-gray-900 mt-2">12</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-2" data-counter="encerradas">12</p>
                         </div>
                         <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
                             <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728">
+                                    d="M6 18L18 6M6 6l12 12">
+                                </path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 border-l-4 border-l-purple-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Total de Consultas</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-2" data-counter="total">24</p>
+                        </div>
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
                                 </path>
                             </svg>
                         </div>
@@ -172,153 +131,302 @@
                 </div>
             </div>
 
-            <!-- Lista de Consultas (estilo tabela) -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Consulta
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <div class="mb-6">
+                <!-- Barra de Busca Principal -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-3">
+                    <div class="relative">
+                        <input type="text" id="search-input"
+                            class="w-full pl-12 pr-12 h-12 border-2 border-gray-200 rounded-lg text-gray-700 focus:border-primary-500 focus:ring focus:ring-primary-100 transition-all duration-200"
+                            placeholder="Buscar por título, ID ou descrição da consulta...">
+                        <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
+                            <i class="fas fa-search text-gray-400 text-lg"></i>
+                        </div>
+                        <div class="absolute right-4 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
+                            <button id="clear-search" class="text-gray-400 hover:text-gray-600 hidden">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <div class="h-6 w-px bg-gray-300"></div>
+                            <button id="toggle-filters"
+                                class="text-gray-600 hover:text-primary-600 transition-colors duration-200 flex items-center">
+                                <i class="fas fa-sliders-h mr-2"></i>
+                                <span class="text-sm font-medium">Filtros</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Painel de Filtros Expandível -->
+                <div id="filters-panel" class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Filtro de Status -->
+                        <div>
+                            <label for="status-filter" class="block text-sm font-medium text-gray-700 mb-2">
+                                Status da Consulta
+                            </label>
+                            <div class="relative">
+                                <select id="status-filter"
+                                    class="w-full h-11 pl-4 pr-10 border border-gray-300 rounded-lg appearance-none bg-white focus:border-primary-500 focus:ring focus:ring-primary-100 transition-all duration-200">
+                                    <option value="Todas">Todos os Status</option>
+                                    <option value="Registrada">Registrada</option>
+                                    <option value="Ativa">Ativa</option>
+                                    <option value="Encerrada">Encerrada</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <i class="fas fa-chevron-down text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Filtro de Período -->
+                        <div>
+                            <label for="period-filter" class="block text-sm font-medium text-gray-700 mb-2">
                                 Período
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Comentários
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Ações
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        <!-- Consulta 1 -->
-                        <tr class="hover:bg-gray-50 cursor-pointer" onclick="showConsultationDetails(1)">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex flex-col">
-                                    <div class="text-sm font-medium text-gray-900">Proposta de Reforma do Sistema de Transporte Público Municipal</div>
-                                    <div class="text-sm text-gray-500">ID: CP-2023-014</div>
+                            </label>
+                            <div class="relative">
+                                <select id="period-filter"
+                                    class="w-full h-11 pl-4 pr-10 border border-gray-300 rounded-lg appearance-none bg-white focus:border-primary-500 focus:ring focus:ring-primary-100 transition-all duration-200">
+                                    <option value="all">Todos os Períodos</option>
+                                    <option value="active">Em Andamento</option>
+                                    <option value="future">Futuros</option>
+                                    <option value="past">Encerrados</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <i class="fas fa-chevron-down text-gray-400"></i>
                                 </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">01/11/2024 - 15/12/2024</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
-                                    Ativa
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="text-sm font-medium text-orange-600">15 pendentes</span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <button class="text-primary-600 hover:text-primary-900">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                        
-                        <!-- Consulta 2 -->
-                        <tr class="hover:bg-gray-50 cursor-pointer" onclick="showConsultationDetails(2)">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex flex-col">
-                                    <div class="text-sm font-medium text-gray-900">Plano Diretor de Desenvolvimento Urbano 2025-2035</div>
-                                    <div class="text-sm text-gray-500">ID: CP-2023-015</div>
+                            </div>
+                        </div>
+
+                        <!-- Filtro de Ordenação -->
+                        <div>
+                            <label for="sort-filter" class="block text-sm font-medium text-gray-700 mb-2">
+                                Ordenar por
+                            </label>
+                            <div class="relative">
+                                <select id="sort-filter"
+                                    class="w-full h-11 pl-4 pr-10 border border-gray-300 rounded-lg appearance-none bg-white focus:border-primary-500 focus:ring focus:ring-primary-100 transition-all duration-200">
+                                    <option value="recent">Mais Recentes</option>
+                                    <option value="oldest">Mais Antigas</option>
+                                    <option value="title">Título (A-Z)</option>
+                                    <option value="comments">Mais Comentários</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <i class="fas fa-chevron-down text-gray-400"></i>
                                 </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">05/11/2024 - 20/01/2025</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
-                                    Ativa
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="text-sm font-medium text-orange-600">8 pendentes</span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <button class="text-primary-600 hover:text-primary-900">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                        
-                        <!-- Consulta 3 -->
-                        <tr class="hover:bg-gray-50 cursor-pointer" onclick="showConsultationDetails(3)">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex flex-col">
-                                    <div class="text-sm font-medium text-gray-900">Regulamentação de Food Trucks no Centro Histórico</div>
-                                    <div class="text-sm text-gray-500">ID: CP-2023-016</div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">01/10/2024 - 30/11/2024</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 py-1 text-xs font-medium bg-red-100 text-red-700 rounded-full">
-                                    Encerrada
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="text-sm font-medium text-gray-600">0 pendentes</span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <button class="text-primary-600 hover:text-primary-900">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                        
-                        <!-- Consulta 4 -->
-                        <tr class="hover:bg-gray-50 cursor-pointer" onclick="showConsultationDetails(4)">
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="flex flex-col">
-                                    <div class="text-sm font-medium text-gray-900">Política de Incentivo à Economia Criativa</div>
-                                    <div class="text-sm text-gray-500">ID: CP-2023-017</div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">10/11/2024 - 10/02/2025</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
-                                    Ativa
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="text-sm font-medium text-orange-600">12 pendentes</span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <button class="text-primary-600 hover:text-primary-900">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filtros Ativos e Botões de Ação -->
+                    <div class="mt-6 flex flex-col sm:flex-row items-center justify-between">
+                        <!-- Tags de Filtros Ativos -->
+                        <div id="active-filters" class="flex flex-wrap gap-2">
+                            <!-- Tags serão inseridas via JavaScript -->
+                        </div>
+
+                        <!-- Botões de Ação -->
+                        <div class="flex items-center space-x-3 mt-4 sm:mt-0">
+                            <button id="clear-filters"
+                                class="px-4 py-2 text-sm text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 flex items-center">
+                                <i class="fas fa-times mr-2"></i>
+                                Limpar Filtros
+                            </button>
+                            <button id="apply-filters"
+                                class="px-4 py-2 text-sm text-white bg-primary-600 hover:bg-primary-700 rounded-lg transition-colors duration-200 flex items-center">
+                                <i class="fas fa-check mr-2"></i>
+                                Aplicar Filtros
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto">
+                <div class="overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <!-- Cabeçalhos da tabela -->
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col"
+                                    class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                    #
+                                </th>
+                                <th scope="col"
+                                    class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Consulta
+                                </th>
+                                <th scope="col"
+                                    class="hidden md:table-cell px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                    Período
+                                </th>
+                                <th scope="col"
+                                    class="hidden md:table-cell px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                    Dias Restantes
+                                </th>
+                                <th scope="col"
+                                    class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                    Status
+                                </th>
+                                <th scope="col"
+                                    class="hidden sm:table-cell px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                    Comentários
+                                </th>
+                                <th scope="col"
+                                    class="px-3 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                    Ações
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="consultas-tbody" class="bg-white divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    1
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex flex-col">
+                                        <div class="text-sm font-medium text-gray-900 break-words">Proposta de
+                                            Reforma do
+                                            Sistema de Transporte Público Municipal</div>
+                                        <div class="text-sm text-gray-500">ID: CP-2023-014</div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    01/11/2024 - 15/12/2024
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                                        Ativa
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                                    <button class="text-primary-600 hover:text-primary-900"
+                                        onclick="event.stopPropagation(); showPublishModal(1)">
+                                        <i class="fas fa-upload"></i>
+                                    </button>
+                                    <button class="text-primary-600 hover:text-primary-900"
+                                        onclick="event.stopPropagation(); showEditModal(1)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-primary-600 hover:text-primary-900"
+                                        onclick="event.stopPropagation(); showConsultationDetails(1)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    2
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex flex-col">
+                                        <div class="text-sm font-medium text-gray-900 break-words">Plano Diretor
+                                            de
+                                            Desenvolvimento Urbano 2025-2035</div>
+                                        <div class="text-sm text-gray-500">ID: CP-2023-015</div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    05/11/2024 - 20/01/2025
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                                        Ativa
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm font-medium text-orange-600">8 pendentes</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                                    <button class="text-primary-600 hover:text-primary-900"
+                                        onclick="event.stopPropagation(); showPublishModal(2)">
+                                        <i class="fas fa-upload"></i>
+                                    </button>
+                                    <button class="text-primary-600 hover:text-primary-900"
+                                        onclick="event.stopPropagation(); showEditModal(2)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-primary-600 hover:text-primary-900"
+                                        onclick="event.stopPropagation(); showConsultationDetails(2)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50 cursor-pointer" onclick="showConsultationDetails(3)">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex flex-col">
+                                        <div class="text-sm font-medium text-gray-900">Regulamentação de Food
+                                            Trucks no
+                                            Centro Histórico</div>
+                                        <div class="text-sm text-gray-500">ID: CP-2023-016</div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">01/10/2024 - 30/11/2024</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs font-medium bg-red-100 text-red-700 rounded-full">
+                                        Encerrada
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm font-medium text-gray-600">0 pendentes</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button class="text-primary-600 hover:text-primary-900">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-primary-600 hover:text-primary-900">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50 cursor-pointer" onclick="showConsultationDetails(4)">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex flex-col">
+                                        <div class="text-sm font-medium text-gray-900">Política de Incentivo à
+                                            Economia
+                                            Criativa</div>
+                                        <div class="text-sm text-gray-500">ID: CP-2023-017</div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">10/11/2024 - 10/02/2025</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                                        Ativa
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm font-medium text-orange-600">12 pendentes</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button class="text-primary-600 hover:text-primary-900">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-primary-600 hover:text-primary-900">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="flex justify-end mt-8 pt-6 border-t border-gray-200">
                 <div class="flex flex-wrap gap-2">
-                    <button class="px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    <button
+                        class="px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                            </path>
                         </svg>
                     </button>
                     <button class="px-3 py-2 text-sm bg-primary-600 text-white rounded-md">1</button>
@@ -329,7 +437,8 @@
                     <button class="px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50">6</button>
                     <button class="px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
                         </svg>
                     </button>
                 </div>
@@ -343,7 +452,6 @@
                 </svg>
                 Voltar para lista
             </button>
-
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                 <div class="flex justify-between items-start mb-6">
                     <div class="flex-1">
@@ -353,7 +461,6 @@
                             class="px-3 py-1 text-sm font-medium bg-green-100 text-green-700 rounded-full">Ativa</span>
                     </div>
                 </div>
-
                 <div class="grid md:grid-cols-2 gap-6 mb-6">
                     <div>
                         <h3 class="text-sm font-medium text-gray-500 mb-2">Data de Início</h3>
@@ -364,7 +471,6 @@
                         <p class="text-gray-900">15/12/2024</p>
                     </div>
                 </div>
-
                 <div class="mb-6">
                     <h3 class="text-sm font-medium text-gray-500 mb-2">Descrição</h3>
                     <p class="text-gray-700 leading-relaxed">
@@ -373,7 +479,6 @@
                         melhorar a qualidade do serviço prestado aos cidadãos.
                     </p>
                 </div>
-
                 <div>
                     <h3 class="text-sm font-medium text-gray-500 mb-3">Perguntas da Consulta</h3>
                     <div class="space-y-3">
@@ -392,36 +497,44 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Seção 2: Área de Moderação de Comentários -->
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-xl font-semibold text-gray-900">Comentários Pendentes de Moderação</h2>
                     <span class="px-3 py-1 text-sm font-medium bg-orange-100 text-orange-700 rounded-full">15
                         pendentes</span>
                 </div>
-
-                <!-- Lista de Comentários -->
-                <div class="space-y-4">
-                    <!-- Comentário 1 -->
+                <div class="space-y-6">
                     <div class="comment-card border border-gray-200 rounded-lg p-6">
                         <div class="flex justify-between items-start mb-4">
                             <div>
                                 <h4 class="font-medium text-gray-900">Maria Silva Santos</h4>
                                 <p class="text-sm text-gray-500">12/12/2024 às 14:30</p>
                             </div>
-                            <div class="flex space-x-2">
+                            <div class="flex items-center space-x-2">
                                 <button onclick="approveComment(this)"
-                                    class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 transition-colors">
+                                    class="flex items-center px-3 py-1.5 bg-green-50 text-green-700 text-sm font-medium rounded-md hover:bg-green-100 transition-colors border border-green-200">
+                                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
                                     Aprovar
                                 </button>
                                 <button onclick="rejectComment(this)"
-                                    class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 transition-colors">
+                                    class="flex items-center px-3 py-1.5 bg-red-50 text-red-700 text-sm font-medium rounded-md hover:bg-red-100 transition-colors border border-red-200">
+                                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
                                     Recusar
                                 </button>
                             </div>
                         </div>
                         <div class="prose max-w-none">
+                            <div class="mb-4 mt-2 p-3 bg-gray-100 border-l-4 border-gray-300 rounded-r-lg">
+                                <p class="text-xs text-gray-600 mb-1">Em resposta à pergunta:</p>
+                                <p class="font-medium text-gray-800 text-sm">"1. Qual sua opinião sobre a proposta de
+                                    integração entre ônibus e metrô?"</p>
+                            </div>
                             <p class="text-gray-700 leading-relaxed">
                                 Acredito que a integração entre ônibus e metrô é fundamental para melhorar a mobilidade
                                 urbana. Sugiro também a implementação de um aplicativo que permita acompanhar em tempo
@@ -429,369 +542,819 @@
                             </p>
                         </div>
                     </div>
-
-                    <!-- Comentário 2 -->
-                    <div class="comment-card border border-gray-200 rounded-lg p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h4 class="font-medium text-gray-900">João Carlos Oliveira</h4>
-                                <p class="text-sm text-gray-500">12/12/2024 às 11:15</p>
-                            </div>
-                            <div class="flex space-x-2">
-                                <button onclick="approveComment(this)"
-                                    class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 transition-colors">
-                                    Aprovar
-                                </button>
-                                <button onclick="rejectComment(this)"
-                                    class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 transition-colors">
-                                    Recusar
-                                </button>
-                            </div>
-                        </div>
-                        <div class="prose max-w-none">
-                            <p class="text-gray-700 leading-relaxed">
-                                A tarifa única é uma excelente ideia, mas é importante garantir que isso não resulte em
-                                aumento de preços para quem usa apenas um modal. Além disso, seria interessante ter
-                                descontos para estudantes e idosos mantidos no novo sistema.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Comentário 3 -->
-                    <div class="comment-card border border-gray-200 rounded-lg p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h4 class="font-medium text-gray-900">Anônimo</h4>
-                                <p class="text-sm text-gray-500">11/12/2024 às 18:42</p>
-                            </div>
-                            <div class="flex space-x-2">
-                                <button onclick="approveComment(this)"
-                                    class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md hover:bg-green-700 transition-colors">
-                                    Aprovar
-                                </button>
-                                <button onclick="rejectComment(this)"
-                                    class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 transition-colors">
-                                    Recusar
-                                </button>
-                            </div>
-                        </div>
-                        <div class="prose max-w-none">
-                            <p class="text-gray-700 leading-relaxed">
-                                Minha principal preocupação é com a acessibilidade. Muitas estações de metrô e pontos de
-                                ônibus ainda não são adequados para pessoas com mobilidade reduzida. Qualquer reforma
-                                deveria priorizar essa questão antes de implementar novas tecnologias.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Paginação -->
-                <div class="flex justify-between items-center mt-8 pt-6 border-t border-gray-200">
-                    <p class="text-sm text-gray-600">Mostrando 1-3 de 15 comentários</p>
-                    <div class="flex space-x-2">
-                        <button
-                            class="px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50">Anterior</button>
-                        <button class="px-3 py-2 text-sm bg-primary-600 text-white rounded-md">1</button>
-                        <button class="px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50">2</button>
-                        <button
-                            class="px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50">Próximo</button>
-                    </div>
                 </div>
             </div>
         </div>
-    </main>
 
-    <!-- Modal de Confirmação -->
-    <div id="confirmation-modal"
-        class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div class="mt-3 text-center">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
-                    <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                </div>
-                <h3 class="text-lg leading-6 font-medium text-gray-900 mb-2">Comentário Aprovado</h3>
-                <p class="text-sm text-gray-500">O comentário foi aprovado e agora está visível publicamente.</p>
-                <div class="mt-4">
-                    <button onclick="closeModal()"
-                        class="px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-md hover:bg-primary-700">
-                        Fechar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+        <div id="confirmation-modal"
+            class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">...</div>
 
-    <!-- Modal de Recusa -->
-    <div id="rejection-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-            <div class="mt-3 text-center">
-                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
-                    <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                        </path>
-                    </svg>
-                </div>
-                <h3 class="text-lg leading-6 font-medium text-gray-900 mb-2">Comentário Recusado</h3>
-                <p class="text-sm text-gray-500 mb-4">O comentário foi recusado e um e-mail de notificação será enviado
-                    ao autor.</p>
-                <div class="text-left bg-gray-50 p-3 rounded text-xs mb-4">
-                    <strong>E-mail enviado:</strong><br>
-                    <strong>Assunto:</strong> Seu comentário na Consulta Pública 'Proposta de Reforma do Sistema de
-                    Transporte Público Municipal' foi moderado.<br><br>
-                    <strong>Corpo:</strong> Olá, [Nome do Cidadão]. Agradecemos sua participação na consulta pública
-                    'Proposta de Reforma do Sistema de Transporte Público Municipal'. Seu comentário não pôde ser
-                    publicado pois não está em conformidade com nossas diretrizes de participação (ex: uso de linguagem
-                    inadequada, conteúdo fora de tópico ou spam). Agradecemos a sua compreensão.
-                </div>
-                <div class="mt-4">
-                    <button onclick="closeModal()"
-                        class="px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-md hover:bg-primary-700">
-                        Fechar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+        <!-- INÍCIO DO MODAL DE REJEIÇÃO MELHORADO -->
+        <div id="rejection-modal"
+            class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-auto my-8">
 
-    <!-- Modal de Nova Consulta -->
-    <div id="new-consultation-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-        <div class="relative top-10 mx-auto p-5 border w-full max-w-4xl shadow-lg rounded-md bg-white">
-            <div class="flex justify-between items-center border-b pb-3 mb-4">
-                <h3 class="text-xl font-bold text-gray-900">Nova Consulta Pública</h3>
-                <button onclick="closeNewConsultationModal()" class="text-gray-500 hover:text-gray-700">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            
-            <div class="max-h-[70vh] overflow-y-auto px-1">
-                <form id="new-consultation-form" class="space-y-6">
-                    <!-- Título da Consulta -->
-                    <div>
-                        <label for="consultation-title" class="block text-sm font-medium text-gray-700 mb-1">Título da Consulta Pública*</label>
-                        <input type="text" id="consultation-title" name="title" required
-                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
-                            placeholder="Ex: Política de Atendimento às Vítimas de Violência Doméstica">
+                <!-- ETAPA 1: Inserir Motivo -->
+                <div id="rejection-step-1">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800">Justificar o Motivo da Rejeição</h3>
+                        <p class="text-sm text-gray-600 mt-1">Descreva o motivo pelo qual o comentário não pode ser
+                            aprovado. Esta informação será enviada ao cidadão.</p>
                     </div>
-                    
-                    <!-- Descrição -->
-                    <div>
-                        <label for="consultation-description" class="block text-sm font-medium text-gray-700 mb-1">Descrição*</label>
-                        <textarea id="consultation-description" name="description" rows="4" required
-                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
-                            placeholder="Descreva o objetivo e a importância desta consulta pública..."></textarea>
+                    <div class="p-6">
+                        <label for="rejection-reason-input" class="block text-sm font-medium text-gray-700 mb-2">Motivo
+                            da Rejeição:</label>
+                        <textarea id="rejection-reason-input" rows="5"
+                            class="w-full border border-gray-300 rounded-md p-3 text-sm focus:ring-primary-500 focus:border-primary-500"
+                            placeholder="Ex: O comentário contém linguagem inadequada e ofensiva..."></textarea>
                     </div>
-                    
-                    <!-- Unidade Responsável e Categoria -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="responsible-unit" class="block text-sm font-medium text-gray-700 mb-1">Unidade Responsável*</label>
-                            <select id="responsible-unit" name="responsibleUnit" required
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
-                                <option value="">Selecione a unidade responsável</option>
-                                <option value="gabinete">Gabinete do Procurador-Geral</option>
-                                <option value="secretaria">Secretaria de Administração</option>
-                                <option value="nucleo">Núcleo de Direitos Humanos</option>
-                                <option value="coordenadoria">Coordenadoria de Políticas Públicas</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Categoria*</label>
-                            <select id="category" name="category" required
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
-                                <option value="">Selecione a categoria</option>
-                                <option value="saude">Saúde</option>
-                                <option value="educacao">Educação</option>
-                                <option value="seguranca">Segurança Pública</option>
-                                <option value="transporte">Transporte</option>
-                                <option value="meio-ambiente">Meio Ambiente</option>
-                                <option value="direitos-humanos">Direitos Humanos</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <!-- Datas de Início e Término -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="start-date" class="block text-sm font-medium text-gray-700 mb-1">Data de Início*</label>
-                            <input type="date" id="start-date" name="startDate" required
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
-                        </div>
-                        <div>
-                            <label for="end-date" class="block text-sm font-medium text-gray-700 mb-1">Data de Término*</label>
-                            <input type="date" id="end-date" name="endDate" required
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
-                        </div>
-                    </div>
-                    
-                    <!-- PGA Relacionado e Origem da Solicitação -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="related-pga" class="block text-sm font-medium text-gray-700 mb-1">PGA Relacionado (opcional)</label>
-                            <input type="text" id="related-pga" name="relatedPga"
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
-                                placeholder="Ex: PGA 2025 - Combate à Violência Doméstica">
-                        </div>
-                        <div>
-                            <label for="request-origin" class="block text-sm font-medium text-gray-700 mb-1">Origem da Solicitação*</label>
-                            <input type="text" id="request-origin" name="requestOrigin" required
-                                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
-                                placeholder="Ex: Gabinete do Procurador-Geral, Ofício nº 123/2025">
-                        </div>
-                    </div>
-                    
-                    <!-- Documento de Referência -->
-                    <div>
-                        <label for="reference-document" class="block text-sm font-medium text-gray-700 mb-1">Documento de Referência (opcional)</label>
-                        <div class="flex items-center space-x-2">
-                            <input type="file" id="reference-document" name="referenceDocument" accept=".pdf,.doc,.docx"
-                                class="hidden">
-                            <label for="reference-document"
-                                class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer hover:bg-gray-300 transition-colors">
-                                Escolher arquivo
-                            </label>
-                            <span id="file-name" class="text-sm text-gray-500">Nenhum arquivo escolhido</span>
-                        </div>
-                        <p class="text-xs text-gray-500 mt-1">Formatos aceitos: PDF, DOC, DOCX. Tamanho máximo: 10MB</p>
-                    </div>
-                    
-                    <!-- Perguntas da Consulta -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-3">Perguntas da Consulta Pública</label>
-                        <div id="questions-container" class="space-y-3 mb-3">
-                            <!-- As perguntas serão adicionadas aqui dinamicamente -->
-                            <div class="question-item flex items-center space-x-2">
-                                <input type="text" name="questions[]" 
-                                    class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
-                                    placeholder="Digite uma pergunta para a consulta pública...">
-                                <button type="button" onclick="removeQuestion(this)" class="text-red-500 hover:text-red-700">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <button type="button" onclick="addQuestion()" 
-                            class="flex items-center text-primary-600 hover:text-primary-700 font-medium">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
-                            Adicionar Pergunta
+                    <div class="px-6 py-4 bg-gray-50 flex justify-end items-center space-x-3 rounded-b-lg">
+                        <button onclick="cancelRejection()"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                            Cancelar
+                        </button>
+                        <button onclick="showRejectionPreview()"
+                            class="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md hover:bg-primary-700">
+                            Continuar para Visualização
                         </button>
                     </div>
-                    
-                    <!-- Checkbox de Confirmação -->
-                    <div class="flex items-start">
-                        <div class="flex items-center h-5">
-                            <input id="terms" name="terms" type="checkbox" required
-                                class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
-                        </div>
-                        <div class="ml-3 text-sm">
-                            <label for="terms" class="font-medium text-gray-700">
-                                Confirmo que esta consulta pública está de acordo com os termos de uso e política de privacidade da plataforma
-                            </label>
+                </div>
+
+                <!-- ETAPA 2: Pré-visualização do E-mail -->
+                <div id="rejection-step-2" class="hidden">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-800">Pré-visualização do E-mail</h3>
+                        <p class="text-sm text-gray-600 mt-1">É assim que o cidadão receberá a notificação por e-mail.
+                        </p>
+                    </div>
+                    <div class="p-6 space-y-4 bg-gray-50 text-sm text-gray-700">
+                        <p><strong>Assunto:</strong> Seu comentário na consulta pública foi revisado</p>
+                        <div class="bg-white p-6 rounded-md border border-gray-200 space-y-4">
+                            <p>Olá, <span class="font-medium" id="email-preview-user-name">[Nome do Cidadão]</span>.</p>
+                            <p>Agradecemos sua participação na consulta pública <span class="font-medium"
+                                    id="email-preview-consultation-name">"[Nome da Consulta]"</span>.</p>
+                            <p>Seu comentário, reproduzido abaixo, foi analisado por nossa equipe de moderação e
+                                infelizmente não pôde ser aprovado pelo seguinte motivo:</p>
+                            <blockquote id="rejection-reason-preview"
+                                class="mt-2 p-3 bg-red-50 text-red-800 border-l-4 border-red-400 rounded-r-lg">
+                                <!-- O motivo inserido pelo gestor aparecerá aqui -->
+                            </blockquote>
+                            <div class="mt-4 pt-4 border-t">
+                                <p class="text-xs text-gray-500 mb-1">Seu comentário original:</p>
+                                <p class="text-gray-600 italic" id="email-preview-original-comment">"[Cópia do
+                                    comentário original do usuário]"</p>
+                            </div>
                         </div>
                     </div>
-                    
-                    <!-- Botões de Ação -->
-                    <div class="flex justify-end space-x-3 pt-4 border-t">
-                        <button type="button" onclick="closeNewConsultationModal()"
+                    <div class="px-6 py-4 bg-gray-100 flex justify-end items-center space-x-3 rounded-b-lg">
+                        <button onclick="returnToRejectionEdit()"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                            Voltar e Editar
+                        </button>
+                        <button onclick="confirmRejection()"
+                            class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700">
+                            Confirmar e Enviar Notificação
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIM DO MODAL DE REJEIÇÃO MELHORADO -->
+
+        <!-- INÍCIO DO MODAL DE NOVA CONSULTA MELHORADO -->
+        <div id="new-consultation-modal"
+            class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+            <div class="relative min-h-screen md:flex md:items-center md:justify-center p-4">
+                <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl mx-auto my-8">
+                    <form id="new-consultation-form" class="h-full flex flex-col">
+                        <div
+                            class="p-6 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-white z-10 rounded-t-lg">
+                            <h3 class="text-xl font-semibold text-gray-800">Criar Nova Consulta Pública</h3>
+                            <button type="button" onclick="closeNewConsultationModal()"
+                                class="text-gray-400 hover:text-gray-600">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="p-6 space-y-6 overflow-y-auto">
+                            <div>
+                                <label for="consultation-title-modal"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Título da Consulta
+                                    Pública*</label>
+                                <input type="text" id="consultation-title-modal" name="title" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
+                                    placeholder="Ex: Política de Atendimento às Vítimas de Violência Doméstica">
+                            </div>
+
+                            <div>
+                                <label for="consultation-description"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Descrição*</label>
+                                <textarea id="consultation-description" name="description" rows="4" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
+                                    placeholder="Descreva o objetivo e a importância desta consulta pública..."></textarea>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="responsible-unit"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Unidade
+                                        Responsável*</label>
+                                    <select id="responsible-unit" name="responsibleUnit" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
+                                        <option value="">Selecione a unidade responsável</option>
+                                        <option value="gabinete">Gabinete do Procurador-Geral</option>
+                                        <option value="secretaria">Secretaria de Administração</option>
+                                        <option value="nucleo">Núcleo de Direitos Humanos</option>
+                                        <option value="coordenadoria">Coordenadoria de Políticas Públicas</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="category"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Categoria*</label>
+                                    <select id="category" name="category" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
+                                        <option value="">Selecione a categoria</option>
+                                        <option value="saude">Saúde</option>
+                                        <option value="educacao">Educação</option>
+                                        <option value="seguranca">Segurança Pública</option>
+                                        <option value="transporte">Transporte</option>
+                                        <option value="meio-ambiente">Meio Ambiente</option>
+                                        <option value="direitos-humanos">Direitos Humanos</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="start-date" class="block text-sm font-medium text-gray-700 mb-1">Data de
+                                        Início*</label>
+                                    <input type="date" id="start-date" name="startDate" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
+                                </div>
+                                <div>
+                                    <label for="end-date" class="block text-sm font-medium text-gray-700 mb-1">Data de
+                                        Término*</label>
+                                    <input type="date" id="end-date" name="endDate" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="consultation-status"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                                    <input type="text" id="consultation-status" name="status" value="Registrado"
+                                        disabled
+                                        class="mt-1 block w-full border border-gray-200 rounded-md px-3 py-2 bg-gray-50 text-gray-600 cursor-not-allowed">
+                                    <p class="text-xs text-gray-500 mt-1">Status inicial da consulta pública</p>
+                                </div>
+                                <div>
+                                    <label for="request-origin"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Origem
+                                        da Solicitação*</label>
+                                    <input type="text" id="request-origin" name="requestOrigin" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
+                                        placeholder="Ex: Gabinete do Procurador-Geral, Ofício nº 123/2025">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="related-pga" class="block text-sm font-medium text-gray-700 mb-1">PGA
+                                        Relacionado (opcional)</label>
+                                    <input type="text" id="related-pga" name="relatedPga"
+                                        class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
+                                        placeholder="Ex: PGA 2025 - Combate à Violência Doméstica">
+                                </div>
+                                <div>
+                                    <label for="request-origin"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Origem
+                                        da Solicitação*</label>
+                                    <input type="text" id="request-origin" name="requestOrigin" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
+                                        placeholder="Ex: Gabinete do Procurador-Geral, Ofício nº 123/2025">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="reference-document"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Documento
+                                    de Referência
+                                    (opcional)</label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="file" id="reference-document" name="referenceDocument"
+                                        accept=".pdf,.doc,.docx" class="hidden">
+                                    <label for="reference-document"
+                                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer hover:bg-gray-300 transition-colors">
+                                        Escolher arquivo
+                                    </label>
+                                    <span id="file-name" class="text-sm text-gray-500">Nenhum arquivo escolhido</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Formatos aceitos: PDF, DOC, DOCX. Tamanho máximo:
+                                    10MB
+                                </p>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Perguntas da Consulta
+                                    Pública</label>
+                                <div id="questions-container" class="space-y-3 mb-3">
+                                    <div class="question-item flex items-center space-x-2">
+                                        <input type="text" name="questions[]"
+                                            class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
+                                            placeholder="Digite uma pergunta para a consulta pública...">
+                                        <button type="button" onclick="removeQuestion(this)"
+                                            class="text-red-500 hover:text-red-700">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="addQuestion()"
+                                    class="flex items-center text-primary-600 hover:text-primary-800 font-medium">
+                                    <i class="fas fa-plus mr-1"></i>
+                                    Adicionar Pergunta
+                                </button>
+                            </div>
+
+                            <div class="flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input id="terms" name="terms" type="checkbox" required
+                                        class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <label for="terms" class="font-medium text-gray-700">
+                                        Confirmo que esta consulta pública está de acordo com os termos de uso e
+                                        política de
+                                        privacidade da plataforma
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="px-6 py-4 bg-gray-50 flex justify-end items-center space-x-3 border-t border-gray-200 sticky bottom-0 z-10 rounded-b-lg">
+                            <button type="button" onclick="closeNewConsultationModal()"
+                                class="px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 transition-colors">
+                                Cancelar
+                            </button>
+                            <button type="submit"
+                                class="px-4 py-2 bg-primary-600 text-white font-medium rounded-md hover:bg-primary-700 transition-colors">
+                                Criar Consulta
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- FIM DO MODAL DE NOVA CONSULTA -->
+
+        <!-- Modal de Confirmação de Publicação -->
+        <div id="publish-modal"
+            class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-lg mx-auto my-8">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-gray-900">Publicar Consulta</h3>
+                        <button onclick="closePublishModal()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-6 space-y-6">
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-500 mb-1">Consulta a ser publicada:</h4>
+                        <p id="publish-modal-title" class="text-lg font-medium text-gray-900"></p>
+                        <p id="publish-modal-id" class="text-sm text-gray-500 mt-1"></p>
+                    </div>
+
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-yellow-800">Atenção</h3>
+                                <div class="mt-2 text-sm text-yellow-700">
+                                    <p>Ao publicar esta consulta:</p>
+                                    <ul class="list-disc list-inside mt-2">
+                                        <li>Ela ficará visível para todos os cidadãos</li>
+                                        <li>Começará a receber contribuições imediatamente</li>
+                                        <li>As datas de início e fim serão respeitadas automaticamente</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="flex items-center">
+                                <input type="radio" name="publish-type" value="immediate" checked
+                                    class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300">
+                                <span class="ml-2 text-sm text-gray-900">Publicar imediatamente</span>
+                            </label>
+                        </div>
+                        <div>
+                            <label class="flex items-center">
+                                <input type="radio" name="publish-type" value="scheduled"
+                                    class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300">
+                                <span class="ml-2 text-sm text-gray-900">Agendar publicação</span>
+                            </label>
+                            <div id="schedule-options" class="mt-3 ml-6 hidden">
+                                <input type="datetime-local" id="schedule-date"
+                                    class="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-6 py-4 bg-gray-50 flex justify-end space-x-3 rounded-b-lg">
+                    <button onclick="closePublishModal()"
+                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                        Cancelar
+                    </button>
+                    <button onclick="confirmPublish()"
+                        class="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-md hover:bg-primary-700">
+                        Confirmar Publicação
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Edição -->
+        <div id="edit-modal"
+            class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 p-4">
+            <div class="relative bg-white rounded-lg shadow-xl w-full max-w-3xl mx-auto my-8">
+                <form id="edit-consultation-form" class="flex flex-col max-h-[90vh]">
+                    <div
+                        class="p-6 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-white z-10 rounded-t-lg">
+                        <h3 class="text-xl font-semibold text-gray-800">Editar Consulta Pública</h3>
+                        <button type="button" onclick="closeEditModal()" class="text-gray-400 hover:text-gray-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="p-6 space-y-6 overflow-y-auto">
+                        <input type="hidden" id="edit-consultation-id">
+
+                        <div>
+                            <label for="edit-title" class="block text-sm font-medium text-gray-700 mb-1">Título da
+                                Consulta Pública*</label>
+                            <input type="text" id="edit-title" name="title" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
+                        </div>
+
+                        <div>
+                            <label for="edit-description"
+                                class="block text-sm font-medium text-gray-700 mb-1">Descrição*</label>
+                            <textarea id="edit-description" name="description" rows="4" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="edit-responsible-unit"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Unidade Responsável*</label>
+                                <select id="edit-responsible-unit" name="responsibleUnit" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
+                                    <option value="">Selecione a unidade responsável</option>
+                                    <option value="gabinete">Gabinete do Procurador-Geral</option>
+                                    <option value="secretaria">Secretaria de Administração</option>
+                                    <option value="nucleo">Núcleo de Direitos Humanos</option>
+                                    <option value="coordenadoria">Coordenadoria de Políticas Públicas</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="edit-category"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Categoria*</label>
+                                <select id="edit-category" name="category" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
+                                    <option value="">Selecione a categoria</option>
+                                    <option value="saude">Saúde</option>
+                                    <option value="educacao">Educação</option>
+                                    <option value="seguranca">Segurança Pública</option>
+                                    <option value="transporte">Transporte</option>
+                                    <option value="meio-ambiente">Meio Ambiente</option>
+                                    <option value="direitos-humanos">Direitos Humanos</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="edit-start-date" class="block text-sm font-medium text-gray-700 mb-1">Data
+                                    de Início*</label>
+                                <input type="date" id="edit-start-date" name="startDate" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                            <div>
+                                <label for="edit-end-date" class="block text-sm font-medium text-gray-700 mb-1">Data de
+                                    Término*</label>
+                                <input type="date" id="edit-end-date" name="endDate" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="edit-status"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Status*</label>
+                                <select id="edit-status" name="status" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500">
+                                    <option value="Registrada">Registrada</option>
+                                    <option value="Ativa">Ativa</option>
+                                    <option value="Encerrada">Encerrada</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="edit-request-origin"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Origem da Solicitação*</label>
+                                <input type="text" id="edit-request-origin" name="requestOrigin" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
+                                    placeholder="Ex: Gabinete do Procurador-Geral, Ofício nº 123/2025">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="edit-related-pga" class="block text-sm font-medium text-gray-700 mb-1">PGA
+                                    Relacionado (opcional)</label>
+                                <input type="text" id="edit-related-pga" name="relatedPga"
+                                    class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
+                                    placeholder="Ex: PGA 2025 - Combate à Violência Doméstica">
+                            </div>
+                            <div>
+                                <label for="edit-reference-document"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Documento de Referência
+                                    (opcional)</label>
+                                <div class="flex items-center space-x-2">
+                                    <input type="file" id="edit-reference-document" name="referenceDocument"
+                                        accept=".pdf,.doc,.docx" class="hidden">
+                                    <label for="edit-reference-document"
+                                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer hover:bg-gray-300 transition-colors">
+                                        Escolher arquivo
+                                    </label>
+                                    <span id="edit-file-name" class="text-sm text-gray-500">Nenhum arquivo
+                                        escolhido</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Formatos aceitos: PDF, DOC, DOCX. Tamanho máximo:
+                                    10MB</p>
+                            </div>
+                        </div>
+
+                        <div id="edit-questions-container">
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Perguntas da Consulta
+                                Pública</label>
+                            <div class="space-y-3 mb-3" id="edit-questions-list"></div>
+                            <button type="button" onclick="addEditQuestion()"
+                                class="flex items-center text-primary-600 hover:text-primary-800 font-medium">
+                                <i class="fas fa-plus mr-1"></i>
+                                Adicionar Pergunta
+                            </button>
+                        </div>
+                    </div>
+
+                    <div
+                        class="px-6 py-4 bg-gray-50 flex justify-end items-center space-x-3 border-t border-gray-200 sticky bottom-0 z-10 rounded-b-lg">
+                        <button type="button" onclick="closeEditModal()"
                             class="px-4 py-2 border border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 transition-colors">
                             Cancelar
                         </button>
                         <button type="submit"
                             class="px-4 py-2 bg-primary-600 text-white font-medium rounded-md hover:bg-primary-700 transition-colors">
-                            Enviar
+                            Salvar Alterações
                         </button>
                     </div>
                 </form>
             </div>
-            
         </div>
-       
-    </div>
+    </main>
 
     <script>
+        // Lista de consultas
+        const consultasList = [
+            {
+                id: 'CP-2023-014',
+                sequencial: 1,
+                titulo: 'Proposta de Reforma do Sistema de Transporte Público Municipal',
+                descricao: 'Esta consulta pública visa coletar contribuições da população sobre a proposta de reforma do sistema de transporte público municipal. O objetivo é modernizar a frota, otimizar rotas e melhorar a qualidade do serviço prestado aos cidadãos.',
+                dataInicio: '01/11/2024',
+                dataFim: '15/12/2024',
+                status: 'Ativa',
+                comentariosPendentes: 15,
+                unidadeResponsavel: 'Secretaria de Transportes',
+                categoria: 'Transporte',
+                perguntas: [
+                    'Qual sua opinião sobre a proposta de integração entre ônibus e metrô?',
+                    'Quais melhorias você considera prioritárias no transporte público?',
+                    'Como você avalia a proposta de tarifa única para todos os modais?'
+                ]
+            },
+            {
+                id: 'CP-2023-015',
+                sequencial: 2,
+                titulo: 'Plano Diretor de Desenvolvimento Urbano 2025-2035',
+                descricao: 'Consulta pública para coleta de sugestões e contribuições ao novo Plano Diretor.',
+                dataInicio: '05/11/2024',
+                dataFim: '20/01/2025',
+                status: 'Ativa',
+                comentariosPendentes: 8,
+                unidadeResponsavel: 'Secretaria de Urbanismo',
+                categoria: 'Desenvolvimento Urbano',
+                perguntas: []
+            },
+            {
+                id: 'CP-2023-016',
+                sequencial: 3,
+                titulo: 'Regulamentação de Food Trucks no Centro Histórico',
+                descricao: 'Consulta sobre as normas de funcionamento de food trucks na região central.',
+                dataInicio: '01/10/2024',
+                dataFim: '30/11/2024',
+                status: 'Encerrada',
+                comentariosPendentes: 0,
+                unidadeResponsavel: 'Secretaria de Desenvolvimento Econômico',
+                categoria: 'Comércio',
+                perguntas: []
+            },
+            {
+                id: 'CP-2023-017',
+                sequencial: 4,
+                titulo: 'Política de Incentivo à Economia Criativa',
+                descricao: 'Consulta para definição das diretrizes de incentivo ao setor criativo.',
+                dataInicio: '10/11/2024',
+                dataFim: '10/02/2025',
+                status: 'Ativa',
+                comentariosPendentes: 12,
+                unidadeResponsavel: 'Secretaria de Cultura',
+                categoria: 'Cultura',
+                perguntas: []
+            }
+        ];
+
+        // Adicione esta função ao seu JavaScript existente
+        function calcularDiasRestantes(dataInicio, dataFim) {
+            const [diaInicio, mesInicio, anoInicio] = dataInicio.split('/');
+            const [diaFim, mesFim, anoFim] = dataFim.split('/');
+
+            const dataInicial = new Date(anoInicio, mesInicio - 1, diaInicio);
+            const dataFinal = new Date(anoFim, mesFim - 1, diaFim);
+
+            const diffTempo = dataFinal.getTime() - dataInicial.getTime();
+            const totalDias = Math.ceil(diffTempo / (1000 * 60 * 60 * 24));
+
+            return {
+                texto: `${totalDias} dias`,
+                classe: 'text-gray-600 text-sm'
+            };
+        }
+
+        // Modifique a função renderizarTabelaConsultas para incluir a nova coluna
+        function renderizarTabelaConsultas(consultas = consultasList) {
+            const tbody = document.getElementById('consultas-tbody');
+            tbody.innerHTML = '';
+
+            consultas.forEach(consulta => {
+                const diasRestantes = calcularDiasRestantes(consulta.dataInicio, consulta.dataFim);
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gray-50';
+
+                const statusClass = consulta.status === 'Ativa'
+                    ? 'bg-green-100 text-green-700'
+                    : consulta.status === 'Registrada'
+                        ? 'bg-blue-100 text-blue-700'
+                        : 'bg-red-100 text-red-700';
+
+                const comentariosClass = consulta.comentariosPendentes > 0
+                    ? 'text-orange-600'
+                    : 'text-gray-600';
+
+                tr.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        ${consulta.sequencial}
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="flex flex-col">
+                            <div class="text-sm font-medium text-gray-900 break-words">${consulta.titulo}</div>
+                            <div class="text-sm text-gray-500">ID: ${consulta.id}</div>
+                        </div>
+                    </td>
+                    <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        ${consulta.dataInicio} - ${consulta.dataFim}
+                    </td>
+                    <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                        <span class="${diasRestantes.classe}">
+                            ${diasRestantes.texto}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs font-medium ${statusClass} rounded-full">
+                            ${consulta.status}
+                        </span>
+                    </td>
+                    <td class="hidden sm:table-cell px-6 py-4 whitespace-nowrap">
+                        <span class="text-sm font-medium ${comentariosClass}">
+                            ${consulta.comentariosPendentes} pendentes
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                        ${consulta.status === 'Ativa' || consulta.status === 'Registrada' ? `
+                            <button class="text-primary-600 hover:text-primary-900" onclick="event.stopPropagation(); showPublishModal('${consulta.id}')">
+                                <i class="fas fa-upload"></i>
+                            </button>
+                        ` : ''}
+                        <button class="text-primary-600 hover:text-primary-900" onclick="event.stopPropagation(); showEditModal('${consulta.id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="text-primary-600 hover:text-primary-900" onclick="event.stopPropagation(); showConsultationDetails('${consulta.id}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                `;
+
+                tbody.appendChild(tr);
+            });
+
+            // Atualiza os contadores
+            atualizarContadores();
+        }
+
+        // Função para atualizar os contadores
+        function atualizarContadores() {
+            const total = consultasList.length;
+            const ativas = consultasList.filter(c => c.status === 'Ativa').length;
+            const registrada = consultasList.filter(c => c.stauts === 'Registrada').length
+            const encerradas = consultasList.filter(c => c.status === 'Encerrada').length;
+            const registradas = consultasList.length; // Ou outro critério específico
+
+            document.querySelector('[data-counter="registradas"]').textContent = registradas;
+            document.querySelector('[data-counter="ativas"]').textContent = ativas;
+            document.querySelector('[data-counter="encerradas"]').textContent = encerradas;
+            document.querySelector('[data-counter="total"]').textContent = total;
+        }
+
+        // Função para buscar consulta por ID
+        function getConsultaById(id) {
+            return consultasList.find(consulta => consulta.id === id);
+        }
+
         // Função para mostrar detalhes da consulta
-        function showConsultationDetails(consultationId) {
+        function showConsultationDetails(consultaId) {
+            const consulta = getConsultaById(consultaId);
+            if (!consulta) return;
+
             document.getElementById('consultation-list').classList.add('hidden');
             document.getElementById('consultation-details').classList.remove('hidden');
+
+            // Atualiza os detalhes da consulta
+            document.getElementById('consultation-title').textContent = consulta.titulo;
+            document.getElementById('consultation-status').innerHTML = `
+            <span class="px-3 py-1 text-sm font-medium ${consulta.status === 'Ativa' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'} rounded-full">
+                ${consulta.status}
+            </span>
+        `;
+            document.getElementById('consultation-start-date').textContent = consulta.dataInicio;
+            document.getElementById('consultation-end-date').textContent = consulta.dataFim;
+            document.getElementById('consultation-description').textContent = consulta.descricao;
+
+            // Renderiza as perguntas
+            const perguntasContainer = document.getElementById('consultation-questions');
+            perguntasContainer.innerHTML = consulta.perguntas.map((pergunta, index) => `
+            <div class="p-4 bg-gray-50 rounded-lg">
+                <p class="font-medium text-gray-900">${index + 1}. ${pergunta}</p>
+            </div>
+        `).join('');
         }
 
-        // Função para voltar à lista
-        document.getElementById('btn-back').addEventListener('click', function () {
-            document.getElementById('consultation-details').classList.add('hidden');
-            document.getElementById('consultation-list').classList.remove('hidden');
-        });
+        // Funções de filtro
+        function aplicarFiltros() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const statusSelecionado = document.getElementById('status-filter').value;
 
-        document.getElementById('btn-dashboard').addEventListener('click', function () {
-            document.getElementById('consultation-details').classList.add('hidden');
-            document.getElementById('consultation-list').classList.remove('hidden');
-        });
+            const consultasFiltradas = consultasList.filter(consulta => {
+                const matchBusca = consulta.titulo.toLowerCase().includes(searchTerm) ||
+                    consulta.id.toLowerCase().includes(searchTerm);
+                const matchStatus = statusSelecionado === 'Todas' || consulta.status === statusSelecionado;
 
-        // Função para aprovar comentário
-        function approveComment(button) {
-            const commentCard = button.closest('.comment-card');
-            commentCard.style.transition = 'all 0.3s ease';
-            commentCard.style.opacity = '0.5';
-            commentCard.style.transform = 'scale(0.95)';
+                return matchBusca && matchStatus;
+            });
 
+            renderizarTabelaConsultas(consultasFiltradas);
+        }
+
+        let currentConsultationId = null;
+
+        // Função para mostrar o modal de publicação
+        function showPublishModal(consultaId) {
+            currentConsultationId = consultaId;
+            const consulta = getConsultaById(consultaId);
+            if (!consulta) return;
+
+            // Atualiza as informações no modal
+            document.getElementById('publish-modal-title').textContent = consulta.titulo;
+            document.getElementById('publish-modal-id').textContent = `ID: ${consulta.id}`;
+
+            // Converte a data de início do formato DD/MM/YYYY para YYYY-MM-DDThh:mm
+            const [dia, mes, ano] = consulta.dataInicio.split('/');
+            const dataInicio = `${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}T00:00`;
+
+            // Define a data de início como valor padrão do agendamento
+            document.getElementById('schedule-date').value = dataInicio;
+
+            // Define a data mínima como a data atual
+            const now = new Date();
+            const dataMinima = now.toISOString().slice(0, 16);
+            document.getElementById('schedule-date').min = dataMinima;
+
+            // Define a data máxima como a data de fim da consulta
+            const [diaFim, mesFim, anoFim] = consulta.dataFim.split('/');
+            const dataFim = `${anoFim}-${mesFim.padStart(2, '0')}-${diaFim.padStart(2, '0')}T23:59`;
+            document.getElementById('schedule-date').max = dataFim;
+
+            // Mostra o modal
+            document.getElementById('publish-modal').classList.remove('hidden');
+
+            // Configura os eventos dos radio buttons
+            const radioButtons = document.getElementsByName('publish-type');
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    const scheduleOptions = document.getElementById('schedule-options');
+                    scheduleOptions.classList.toggle('hidden', this.value === 'immediate');
+                });
+            });
+        }
+
+        // Função para fechar o modal
+        function closePublishModal() {
+            document.getElementById('publish-modal').classList.add('hidden');
+            currentConsultationId = null;
+        }
+
+        // Função para confirmar a publicação
+        function confirmPublish() {
+            if (!currentConsultationId) return;
+
+            const consulta = getConsultaById(currentConsultationId);
+            if (!consulta) return;
+
+            const publishType = document.querySelector('input[name="publish-type"]:checked').value;
+            const scheduleDate = document.getElementById('schedule-date').value;
+
+            if (publishType === 'scheduled' && !scheduleDate) {
+                alert('Por favor, selecione uma data para o agendamento.');
+                return;
+            }
+
+            // Atualiza o status da consulta
+            consulta.status = 'Ativa';
+
+            // Fecha o modal e atualiza a tabela
+            closePublishModal();
+            renderizarTabelaConsultas();
+
+            // Mostra mensagem de sucesso
+            const message = publishType === 'immediate'
+                ? `Consulta "${consulta.titulo}" publicada com sucesso!`
+                : `Consulta "${consulta.titulo}" agendada para publicação em ${new Date(scheduleDate).toLocaleString()}`;
+
+            // Mostra notificação de sucesso
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transition-opacity duration-500';
+            notification.innerHTML = `
+            <div class="flex items-center">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span>${message}</span>
+            </div>
+        `;
+            document.body.appendChild(notification);
+
+            // Remove a notificação após 5 segundos
             setTimeout(() => {
-                commentCard.remove();
-                showModal('confirmation-modal');
-            }, 300);
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 500);
+            }, 5000);
         }
 
-        // Função para recusar comentário
-        function rejectComment(button) {
-            const commentCard = button.closest('.comment-card');
-            commentCard.style.transition = 'all 0.3s ease';
-            commentCard.style.opacity = '0.5';
-            commentCard.style.transform = 'scale(0.95)';
-
-            setTimeout(() => {
-                commentCard.remove();
-                showModal('rejection-modal');
-            }, 300);
-        }
-
-        // Função para mostrar modal
-        function showModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-        }
-
-        // Função para fechar modal
-        function closeModal() {
-            document.getElementById('confirmation-modal').classList.add('hidden');
-            document.getElementById('rejection-modal').classList.add('hidden');
-        }
-
-        // Fechar modal clicando fora dele
-        window.onclick = function (event) {
-            const confirmationModal = document.getElementById('confirmation-modal');
-            const rejectionModal = document.getElementById('rejection-modal');
-            const newConsultationModal = document.getElementById('new-consultation-modal');
-
-            if (event.target === confirmationModal) {
-                confirmationModal.classList.add('hidden');
-            }
-            if (event.target === rejectionModal) {
-                rejectionModal.classList.add('hidden');
-            }
-            if (event.target === newConsultationModal) {
-                newConsultationModal.classList.add('hidden');
-            }
-        }
-
-        // Funções para o modal de Nova Consulta
+        // Função para mostrar o modal de nova consulta
         function showNewConsultationModal() {
-            console.log('teste')
             document.getElementById('new-consultation-modal').classList.remove('hidden');
+
+            // Configura a data mínima como hoje para as datas de início e fim
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('start-date').min = today;
+            document.getElementById('end-date').min = today;
+
+            // Limpa o formulário
+            document.getElementById('new-consultation-form').reset();
         }
 
+        // Função para fechar o modal de nova consulta
         function closeNewConsultationModal() {
             document.getElementById('new-consultation-modal').classList.add('hidden');
         }
@@ -802,125 +1365,552 @@
             const newQuestion = document.createElement('div');
             newQuestion.className = 'question-item flex items-center space-x-2';
             newQuestion.innerHTML = `
-                <input type="text" name="questions[]" 
-                    class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
-                    placeholder="Digite uma pergunta para a consulta pública...">
-                <button type="button" onclick="removeQuestion(this)" class="text-red-500 hover:text-red-700">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                    </svg>
-                </button>
-            `;
+            <input type="text" name="questions[]"
+                class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
+                placeholder="Digite uma pergunta para a consulta pública...">
+            <button type="button" onclick="removeQuestion(this)"
+                class="text-red-500 hover:text-red-700">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        `;
             container.appendChild(newQuestion);
         }
 
+        // Função para remover pergunta
         function removeQuestion(button) {
-            const questionItem = button.closest('.question-item');
-            questionItem.remove();
+            button.closest('.question-item').remove();
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const fileInput = document.getElementById('reference-document');
-            const fileNameSpan = document.getElementById('file-name');
-            
-            if (fileInput && fileNameSpan) {
-                fileInput.addEventListener('change', function() {
-                    if (this.files.length > 0) {
-                        const file = this.files[0];
-                        // Verificar tamanho do arquivo (10MB = 10 * 1024 * 1024 bytes)
-                        if (file.size > 10 * 1024 * 1024) {
-                            alert('O arquivo excede o tamanho máximo de 10MB.');
-                            this.value = '';
-                            fileNameSpan.textContent = 'Nenhum arquivo escolhido';
-                            return;
-                        }
-                        fileNameSpan.textContent = file.name;
-                    } else {
-                        fileNameSpan.textContent = 'Nenhum arquivo escolhido';
-                    }
-                });
-            }
-            
-            const form = document.getElementById('new-consultation-form');
-            if (form) {
-                form.addEventListener('submit', function(e) {
+        // Função para gerar ID sequencial
+        function generateConsultationId() {
+            const year = new Date().getFullYear();
+            const lastId = consultasList.length > 0
+                ? parseInt(consultasList[consultasList.length - 1].id.split('-')[2])
+                : 0;
+            return `CP-${year}-${(lastId + 1).toString().padStart(3, '0')}`;
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function () {
+            // Renderiza a tabela inicial
+            renderizarTabelaConsultas();
+
+            // Configura os eventos de filtro
+            document.getElementById('search-input').addEventListener('input', aplicarFiltros);
+            document.getElementById('status-filter').addEventListener('change', aplicarFiltros);
+
+            // Configura o formulário de nova consulta
+            const newConsultationForm = document.getElementById('new-consultation-form');
+            if (newConsultationForm) {
+                console.log('Form encontrado');
+                newConsultationForm.addEventListener('submit', function (e) {
+                    console.log('Form submetido');
                     e.preventDefault();
-                    closeNewConsultationModal();
-                    alert('Consulta pública criada com sucesso!');
-                });
-            }
-        });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const newConsultationButton = document.querySelector('button.flex.items-center.px-4.py-2.bg-primary-600');
-            if (newConsultationButton) {
-                newConsultationButton.addEventListener('click', showNewConsultationModal);
-            }
-        });
+                    // Validação dos campos obrigatórios
+                    const requiredFields = [
+                        'consultation-title-modal',
+                        'consultation-description',
+                        'responsible-unit',
+                        'category',
+                        'start-date',
+                        'end-date',
+                        'request-origin'
+                    ];
 
-        // Funções para paginação
-        document.addEventListener('DOMContentLoaded', function() {
-            const paginationButtons = document.querySelectorAll('.flex.flex-wrap.justify-center.sm\\:justify-end.gap-2 button');
-            
-            if (paginationButtons.length > 0) {
-                paginationButtons.forEach(button => {
-                    if (!button.disabled) {
-                        button.addEventListener('click', function() {
-                            // Remove a classe ativa de todos os botões
-                            paginationButtons.forEach(btn => {
-                                btn.classList.remove('bg-primary-600', 'text-white');
-                                if (!btn.disabled) {
-                                    btn.classList.add('border', 'border-gray-300', 'hover:bg-gray-50');
-                                }
-                            });
-                            
-                            // Adiciona a classe ativa ao botão clicado
-                            if (!this.disabled && !this.querySelector('svg')) {
-                                this.classList.remove('border', 'border-gray-300', 'hover:bg-gray-50');
-                                this.classList.add('bg-primary-600', 'text-white');
-                                
-                                // Carrega os dados da página correspondente
-                                simulateLoadPage(this.textContent);
-                            } else if (this.querySelector('svg path[d*="M9 5l7 7-7 7"]')) {
-                                // Botão "Próximo"
-                                const activeButton = document.querySelector('.bg-primary-600.text-white');
-                                if (activeButton) {
-                                    const nextPage = parseInt(activeButton.textContent) + 1;
-                                    const nextButton = Array.from(paginationButtons).find(btn => btn.textContent.trim() === nextPage.toString());
-                                    if (nextButton) nextButton.click();
-                                }
-                            } else if (this.querySelector('svg path[d*="M15 19l-7-7 7-7"]')) {
-                                // Botão "Anterior"
-                                const activeButton = document.querySelector('.bg-primary-600.text-white');
-                                if (activeButton) {
-                                    const prevPage = parseInt(activeButton.textContent) - 1;
-                                    const prevButton = Array.from(paginationButtons).find(btn => btn.textContent.trim() === prevPage.toString());
-                                    if (prevButton) prevButton.click();
-                                }
+                    const isValid = requiredFields.every(field => {
+                        const element = document.getElementById(field);
+                        if (!element || !element.value.trim()) {
+                            if (element) {
+                                element.classList.add('border-red-500');
                             }
-                        });
+                            console.log('Campo inválido:', field);
+                            return false;
+                        }
+                        element.classList.remove('border-red-500');
+                        return true;
+                    });
+
+                    if (!isValid) {
+                        showNotification('Por favor, preencha todos os campos obrigatórios.', 'error');
+                        return;
+                    }
+
+                    // Coleta os dados do formulário
+                    const formData = {
+                        id: generateConsultationId(),
+                        sequencial: consultasList.length + 1,
+                        titulo: document.getElementById('consultation-title-modal').value,
+                        descricao: document.getElementById('consultation-description').value,
+                        dataInicio: formatDateToBR(document.getElementById('start-date').value),
+                        dataFim: formatDateToBR(document.getElementById('end-date').value),
+                        status: 'Registrada',
+                        comentariosPendentes: 0,
+                        unidadeResponsavel: document.getElementById('responsible-unit').options[document.getElementById('responsible-unit').selectedIndex].text,
+                        categoria: document.getElementById('category').options[document.getElementById('category').selectedIndex].text,
+                        perguntas: Array.from(document.querySelectorAll('#questions-container input[name="questions[]"]'))
+                            .map(input => input.value)
+                            .filter(value => value.trim() !== '')
+                    };
+
+                    console.log('Dados do formulário:', formData);
+
+                    // Adiciona a nova consulta à lista
+                    consultasList.push(formData);
+
+                    // Atualiza a tabela
+                    renderizarTabelaConsultas();
+
+                    // Fecha o modal
+                    closeNewConsultationModal();
+
+                    // Mostra notificação de sucesso
+                    showNotification(`Consulta "${formData.titulo}" criada com sucesso!`, 'success');
+
+                    // Limpa o formulário
+                    newConsultationForm.reset();
+                });
+            } else {
+                console.error('Formulário não encontrado');
+            }
+        });
+
+        // Função auxiliar para formatar data YYYY-MM-DD para DD/MM/YYYY
+        function formatDateToBR(dateString) {
+            const [year, month, day] = dateString.split('-');
+            return `${day}/${month}/${year}`;
+        }
+
+        let editingConsultation = null;
+
+        function showEditModal(consultaId) {
+            const consulta = getConsultaById(consultaId);
+            if (!consulta) return;
+
+            editingConsultation = consulta;
+
+            // Preenche os campos do formulário
+            document.getElementById('edit-consultation-id').value = consulta.id;
+            document.getElementById('edit-title').value = consulta.titulo;
+            document.getElementById('edit-description').value = consulta.descricao;
+            document.getElementById('edit-responsible-unit').value = consulta.unidadeResponsavel;
+            document.getElementById('edit-category').value = consulta.categoria;
+            document.getElementById('edit-request-origin').value = consulta.origemSolicitacao || '';
+            document.getElementById('edit-related-pga').value = consulta.pgaRelacionado || '';
+            document.getElementById('edit-file-name').textContent = consulta.documentoReferencia || 'Nenhum arquivo escolhido';
+
+            // Converte as datas do formato DD/MM/YYYY para YYYY-MM-DD
+            const [diaInicio, mesInicio, anoInicio] = consulta.dataInicio.split('/');
+            const [diaFim, mesFim, anoFim] = consulta.dataFim.split('/');
+
+            document.getElementById('edit-start-date').value = `${anoInicio}-${mesInicio.padStart(2, '0')}-${diaInicio.padStart(2, '0')}`;
+            document.getElementById('edit-end-date').value = `${anoFim}-${mesFim.padStart(2, '0')}-${diaFim.padStart(2, '0')}`;
+            document.getElementById('edit-status').value = consulta.status;
+
+            // Desabilita campos se a consulta estiver ativa
+            const isAtiva = consulta.status === 'Ativa';
+            const fieldsToDisable = [
+                'edit-title', 'edit-description', 'edit-responsible-unit',
+                'edit-category', 'edit-start-date', 'edit-end-date',
+                'edit-request-origin', 'edit-related-pga', 'edit-reference-document'
+            ];
+
+            fieldsToDisable.forEach(fieldId => {
+                document.getElementById(fieldId).disabled = isAtiva;
+            });
+
+            // Renderiza as perguntas
+            const questionsContainer = document.getElementById('edit-questions-list');
+            questionsContainer.innerHTML = consulta.perguntas.map((pergunta, index) => `
+            <div class="question-item flex items-center space-x-2">
+                <input type="text" name="edit-questions[]" value="${pergunta}"
+                    class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
+                    ${isAtiva ? 'disabled' : ''}>
+                ${!isAtiva ? `
+                    <button type="button" onclick="removeEditQuestion(this)"
+                        class="text-red-500 hover:text-red-700">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                ` : ''}
+            </div>
+        `).join('');
+
+            // Mostra o modal
+            document.getElementById('edit-modal').classList.remove('hidden');
+        }
+
+        // Função para adicionar nova pergunta no formulário de edição
+        function addEditQuestion() {
+            const container = document.getElementById('edit-questions-list');
+            const newQuestion = document.createElement('div');
+            newQuestion.className = 'question-item flex items-center space-x-2';
+            newQuestion.innerHTML = `
+            <input type="text" name="edit-questions[]"
+                class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:ring-primary-500 focus:border-primary-500"
+                placeholder="Digite uma pergunta para a consulta pública...">
+            <button type="button" onclick="removeEditQuestion(this)"
+                class="text-red-500 hover:text-red-700">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        `;
+            container.appendChild(newQuestion);
+        }
+
+        // Função para remover pergunta no formulário de edição
+        function removeEditQuestion(button) {
+            button.closest('.question-item').remove();
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').classList.add('hidden');
+            editingConsultation = null;
+        }
+
+        document.getElementById('edit-consultation-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            if (!editingConsultation) return;
+
+            // Atualiza apenas os campos permitidos
+            if (editingConsultation.status === 'Ativa') {
+                // Se estiver ativa, atualiza apenas o status
+                editingConsultation.status = document.getElementById('edit-status').value;
+            } else {
+                // Se não estiver ativa, atualiza todos os campos
+                editingConsultation.titulo = document.getElementById('edit-title').value;
+                editingConsultation.descricao = document.getElementById('edit-description').value;
+                editingConsultation.dataInicio = formatDateToBR(document.getElementById('edit-start-date').value);
+                editingConsultation.dataFim = formatDateToBR(document.getElementById('edit-end-date').value);
+                editingConsultation.status = document.getElementById('edit-status').value;
+                editingConsultation.perguntas = Array.from(document.getElementsByName('edit-questions[]'))
+                    .map(input => input.value)
+                    .filter(value => value.trim() !== '');
+            }
+
+            // Atualiza a tabela
+            renderizarTabelaConsultas();
+
+            // Fecha o modal
+            closeEditModal();
+
+            // Mostra notificação de sucesso
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transition-opacity duration-500';
+            notification.innerHTML = `
+            <div class="flex items-center">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span>Consulta atualizada com sucesso!</span>
+            </div>
+        `;
+            document.body.appendChild(notification);
+
+            // Remove a notificação após 5 segundos
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 500);
+            }, 5000);
+        });
+
+        // Função para aprovar comentário
+        function approveComment(button) {
+            const commentCard = button.closest('.comment-card');
+            if (!commentCard) return;
+
+            // Mostra uma notificação de sucesso
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transition-opacity duration-500';
+            notification.innerHTML = `
+            <div class="flex items-center">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span>Comentário aprovado com sucesso!</span>
+            </div>
+        `;
+            document.body.appendChild(notification);
+
+            // Remove o card do comentário com animação
+            commentCard.style.transition = 'opacity 0.5s, transform 0.5s';
+            commentCard.style.opacity = '0';
+            commentCard.style.transform = 'translateX(100px)';
+
+            setTimeout(() => {
+                commentCard.remove();
+
+                // Atualiza o contador de comentários pendentes
+                const pendentesSpan = document.querySelector('.text-orange-600');
+                if (pendentesSpan) {
+                    const currentCount = parseInt(pendentesSpan.textContent);
+                    pendentesSpan.textContent = `${currentCount - 1} pendentes`;
+                }
+            }, 500);
+
+            // Remove a notificação após 5 segundos
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 500);
+            }, 5000);
+        }
+
+        // Função para rejeitar comentário
+        function rejectComment(button) {
+            const commentCard = button.closest('.comment-card');
+            if (!commentCard) return;
+
+            // Captura as informações do comentário
+            const userName = commentCard.querySelector('h4').textContent;
+            const commentText = commentCard.querySelector('.prose p:last-child').textContent;
+
+            // Preenche as informações no modal de rejeição
+            document.getElementById('email-preview-user-name').textContent = userName;
+            document.getElementById('email-preview-original-comment').textContent = `"${commentText}"`;
+
+            // Mostra o modal de rejeição
+            const rejectionModal = document.getElementById('rejection-modal');
+            rejectionModal.classList.remove('hidden');
+
+            // Mostra a primeira etapa e esconde a segunda
+            document.getElementById('rejection-step-1').classList.remove('hidden');
+            document.getElementById('rejection-step-2').classList.add('hidden');
+
+            // Limpa o campo de motivo
+            document.getElementById('rejection-reason-input').value = '';
+        }
+
+        // Função para cancelar a rejeição
+        function cancelRejection() {
+            document.getElementById('rejection-modal').classList.add('hidden');
+        }
+
+        // Função para mostrar a pré-visualização da rejeição
+        function showRejectionPreview() {
+            const reason = document.getElementById('rejection-reason-input').value.trim();
+
+            if (!reason) {
+                alert('Por favor, insira um motivo para a rejeição.');
+                return;
+            }
+
+            // Atualiza o motivo na pré-visualização
+            document.getElementById('rejection-reason-preview').textContent = reason;
+
+            // Esconde a primeira etapa e mostra a segunda
+            document.getElementById('rejection-step-1').classList.add('hidden');
+            document.getElementById('rejection-step-2').classList.remove('hidden');
+        }
+
+        // Função para voltar à edição do motivo
+        function returnToRejectionEdit() {
+            document.getElementById('rejection-step-1').classList.remove('hidden');
+            document.getElementById('rejection-step-2').classList.add('hidden');
+        }
+
+        // Função para confirmar a rejeição
+        function confirmRejection() {
+            const commentCard = document.querySelector('.comment-card');
+            if (!commentCard) return;
+
+            // Remove o modal
+            document.getElementById('rejection-modal').classList.add('hidden');
+
+            // Mostra uma notificação de sucesso
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg transition-opacity duration-500';
+            notification.innerHTML = `
+            <div class="flex items-center">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span>Comentário rejeitado e notificação enviada ao cidadão.</span>
+            </div>
+        `;
+            document.body.appendChild(notification);
+
+            // Remove o card do comentário com animação
+            commentCard.style.transition = 'opacity 0.5s, transform 0.5s';
+            commentCard.style.opacity = '0';
+            commentCard.style.transform = 'translateX(100px)';
+
+            setTimeout(() => {
+                commentCard.remove();
+
+                // Atualiza o contador de comentários pendentes
+                const pendentesSpan = document.querySelector('.text-orange-600');
+                if (pendentesSpan) {
+                    const currentCount = parseInt(pendentesSpan.textContent);
+                    pendentesSpan.textContent = `${currentCount - 1} pendentes`;
+                }
+            }, 500);
+
+            // Remove a notificação após 5 segundos
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 500);
+            }, 5000);
+        }
+
+        // Adicionar ao script existente
+        function adjustTableResponsiveness() {
+            const width = window.innerWidth;
+            const table = document.querySelector('table');
+
+            if (width < 640) { // Mobile
+                table.classList.add('mobile-view');
+                // Ajusta o layout para visualização móvel
+                document.querySelectorAll('.hidden-mobile').forEach(el => el.style.display = 'none');
+            } else {
+                table.classList.remove('mobile-view');
+                document.querySelectorAll('.hidden-mobile').forEach(el => el.style.display = '');
+            }
+        }
+
+        // Adicionar listener para redimensionamento
+        window.addEventListener('resize', adjustTableResponsiveness);
+        window.addEventListener('load', adjustTableResponsiveness);
+
+        // Adicionar feedback visual para ações
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+
+            notification.className = `fixed bottom-4 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg transition-opacity duration-500 z-50`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} mr-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 500);
+            }, 5000);
+        }
+
+        // Adicionar loading states
+        function showLoading() {
+            const loading = document.createElement('div');
+            loading.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50';
+            loading.innerHTML = `
+                <div class="bg-white p-4 rounded-lg shadow-lg">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+                </div>
+            `;
+            document.body.appendChild(loading);
+            return loading;
+        }
+
+        function hideLoading(loadingElement) {
+            loadingElement.remove();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search-input');
+            const clearSearchBtn = document.getElementById('clear-search');
+            const toggleFiltersBtn = document.getElementById('toggle-filters');
+            const filtersPanel = document.getElementById('filters-panel');
+            const clearFiltersBtn = document.getElementById('clear-filters');
+            const applyFiltersBtn = document.getElementById('apply-filters');
+            const activeFiltersContainer = document.getElementById('active-filters');
+
+            // Toggle do painel de filtros
+            toggleFiltersBtn.addEventListener('click', function () {
+                filtersPanel.classList.toggle('hidden');
+                // Adiciona animação suave
+                if (!filtersPanel.classList.contains('hidden')) {
+                    filtersPanel.style.opacity = '0';
+                    filtersPanel.style.transform = 'translateY(-10px)';
+                    setTimeout(() => {
+                        filtersPanel.style.transition = 'all 0.3s ease-out';
+                        filtersPanel.style.opacity = '1';
+                        filtersPanel.style.transform = 'translateY(0)';
+                    }, 10);
+                }
+            });
+
+            // Limpar campo de busca
+            searchInput.addEventListener('input', function () {
+                clearSearchBtn.classList.toggle('hidden', !this.value);
+                updateActiveFilters();
+            });
+
+            clearSearchBtn.addEventListener('click', function () {
+                searchInput.value = '';
+                this.classList.add('hidden');
+                updateActiveFilters();
+                aplicarFiltros();
+            });
+
+            // Atualizar filtros ativos
+            function updateActiveFilters() {
+                const filters = [];
+
+                if (searchInput.value) {
+                    filters.push(createFilterTag('search', `Busca: ${searchInput.value}`));
+                }
+
+                ['status', 'period', 'sort'].forEach(type => {
+                    const select = document.getElementById(`${type}-filter`);
+                    if (select && select.value !== 'Todas' && select.value !== 'all') {
+                        filters.push(createFilterTag(type,
+                            `${select.options[select.selectedIndex].text}`));
                     }
                 });
-            }
-        });
 
-        // Função para simular carregamento de página
-        function simulateLoadPage(pageNumber) {
-            // Aqui você implementaria a lógica para carregar os dados da página
-            console.log(`Carregando dados da página ${pageNumber}`);
-            
-            // Atualiza o texto de "Mostrando X-Y de Z consultas"
-            const itemsPerPage = 4;
-            const totalItems = 24;
-            const startItem = (pageNumber - 1) * itemsPerPage + 1;
-            const endItem = Math.min(pageNumber * itemsPerPage, totalItems);
-            
-            document.querySelector('.text-sm.text-gray-600').textContent = 
-                `Mostrando ${startItem}-${endItem} de ${totalItems} consultas`;
-                
-            // Aqui você poderia atualizar os itens da lista com os novos dados
-            // Por exemplo, fazendo uma requisição AJAX e atualizando o DOM
-        }
+                activeFiltersContainer.innerHTML = filters.join('');
+                activeFiltersContainer.classList.toggle('hidden', filters.length === 0);
+            }
+
+            // Criar tag de filtro
+            function createFilterTag(type, text) {
+                return `
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-primary-50 text-primary-700 border border-primary-200">
+                        ${text}
+                        <button onclick="removeFilter('${type}')" class="ml-2 text-primary-600 hover:text-primary-800">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </span>
+                `;
+            }
+
+            // Remover filtro específico
+            window.removeFilter = function (type) {
+                switch (type) {
+                    case 'search':
+                        searchInput.value = '';
+                        clearSearchBtn.classList.add('hidden');
+                        break;
+                    default:
+                        const select = document.getElementById(`${type}-filter`);
+                        if (select) {
+                            select.value = type === 'status' ? 'Todas' : 'all';
+                        }
+                }
+                updateActiveFilters();
+                aplicarFiltros();
+            };
+
+            // Aplicar filtros
+            applyFiltersBtn.addEventListener('click', function () {
+                aplicarFiltros();
+                filtersPanel.classList.add('hidden');
+            });
+
+            // Limpar todos os filtros
+            clearFiltersBtn.addEventListener('click', function () {
+                searchInput.value = '';
+                clearSearchBtn.classList.add('hidden');
+                ['status', 'period', 'sort'].forEach(type => {
+                    const select = document.getElementById(`${type}-filter`);
+                    if (select) {
+                        select.value = type === 'status' ? 'Todas' : 'all';
+                    }
+                });
+                updateActiveFilters();
+                aplicarFiltros();
+            });
+
+            // Inicialização
+            updateActiveFilters();
+        });
     </script>
 </body>
 
